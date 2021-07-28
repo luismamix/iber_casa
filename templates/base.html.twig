@@ -2,18 +2,76 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenido!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+           
         {% endblock %}
 
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+           
         {% endblock %}
     </head>
     <body>
+
+        <div class="container">
+
+        {% if is_granted('ROLE_ADMIN')%}
+         {{ include('menu_ROLE_ADMIN.html.twig') }}
+        {% elseif is_granted('ROLE_VENDEDOR')%}
+             {{ include('menu_ROLE_VENDEDOR.html.twig') }}
+        {% elseif is_granted('ROLE_COMPRADOR')%}
+             {{ include('menu_ROLE_COMPRADOR.html.twig') }}
+        {% endif %}
+      
+        
+        {% for label, mensajes in app.flashes %}
+            <div class="modal" id="modal-flashes" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{label}}</h5>
+                        <button type="button" class="close" data-dismiss="modal-flashes" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% for mensaje in mensajes %}
+                        <p>{{ mensaje }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal-flashes">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
         {% block body %}{% endblock %}
+        </div>
+        
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+        <script>
+        var myModal = new bootstrap.Modal(document.getElementById('modal-flashes'), {
+            keyboard: false
+        })
+        // myModal.show();
+        </script>
+
+        {% block javascripts_footer %}
+
+        {% endblock %}
     </body>
 </html>

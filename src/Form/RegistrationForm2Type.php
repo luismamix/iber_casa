@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use App\Entity\TipoUsuario;
 
-class RegistrationFormType extends AbstractType
+class RegistrationForm2Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -64,16 +64,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Telefono',
                 'required'   => true,
                 'attr' => ['min' => 600000000, 'max' => 699999999],
-            ])  
-            ->add('tipousr', ChoiceType::class,[
-                'mapped' => false,
-                'label' => 'Tipo de usuario',
-                'required'   => true,
-                'choices'  => [
-                    'Admin' => 1,
-                    'Vendedor' =>  2,
-                    'Comprador' => 3
-                ]  
             ])  
         ;
     }
