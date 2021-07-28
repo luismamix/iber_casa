@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use App\Entity\TipoUsuario;
 
 class RegistrationFormType extends AbstractType
 {
@@ -62,21 +63,16 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Telefono',
                 'required'   => true
             ])  
-            ->add('roles',ChoiceType::class,[
-              /*   'label' => 'Rol',
-                'required'   => true, */
-                'choices'  => [
-                    'Admin' => '["ROLE_ADMIN"]',
-                    'Vendedor' =>  '["ROLE_VENDEDOR"]',
-                    'Comprador' => '["ROLE_COMPRADOR"]'
-                ]
-            ]) 
-            ->add('tipousuario', IntegerType::class,[
+            ->add('tipousr', ChoiceType::class,[
+                'mapped' => false,
                 'label' => 'Tipo de usuario',
                 'required'   => true,
-                
-            ])
-
+                'choices'  => [
+                    'Admin' => 1,
+                    'Vendedor' =>  2,
+                    'Comprador' => 3
+                ]  
+            ])  
         ;
     }
 

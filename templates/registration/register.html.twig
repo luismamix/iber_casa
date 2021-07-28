@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Pantalla de Registro{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1>Registro</h1>
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
@@ -14,8 +14,7 @@
         {{ form_row(registrationForm.apellido) }}
         {{ form_row(registrationForm.direccion) }}
         {{ form_row(registrationForm.telefono) }}
-        {{ form_row(registrationForm.roles) }}
-        {{ form_row(registrationForm.tipousuario) }}
+        {{ form_row(registrationForm.tipousr) }}
 
         <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
