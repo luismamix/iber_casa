@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Status2 index{% endblock %}
+
+{% block body %}
+    <h1>Status2 index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for status2 in status2s %}
+            <tr>
+                <td>{{ status2.id }}</td>
+                <td>{{ status2.descripcion }}</td>
+                <td>
+                    <a href="{{ path('status2_show', {'id': status2.id}) }}">show</a>
+                    <a href="{{ path('status2_edit', {'id': status2.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('status2_new') }}">Create new</a>
+{% endblock %}

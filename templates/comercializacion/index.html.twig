@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comercializacion index{% endblock %}
+
+{% block body %}
+    <h1>Comercializacion index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for comercializacion in comercializacions %}
+            <tr>
+                <td>{{ comercializacion.id }}</td>
+                <td>{{ comercializacion.descripcion }}</td>
+                <td>
+                    <a href="{{ path('comercializacion_show', {'id': comercializacion.id}) }}">show</a>
+                    <a href="{{ path('comercializacion_edit', {'id': comercializacion.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('comercializacion_new') }}">Create new</a>
+{% endblock %}

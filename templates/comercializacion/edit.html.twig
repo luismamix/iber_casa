@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Comercializacion{% endblock %}
+
+{% block body %}
+    <h1>Edit Comercializacion</h1>
+
+    {{ include('comercializacion/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('comercializacion_index') }}">back to list</a>
+
+    {{ include('comercializacion/_delete_form.html.twig') }}
+{% endblock %}

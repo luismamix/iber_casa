@@ -1,5 +1,5 @@
 <div class="row">
-      <div class="col bg-dark rounded">
+      <div class="col bg-dark rounded mt-2">
         <nav class="navbar navbar-expand-lg navbar-dark bg-general-navbar">
           {# <a class="navbar-brand color-acqua h5" href="#">Iber Casa</a> #}
           <img id="logo-pequeño" src="{{ asset('img/logo/iber-casa.svg') }}" alt="" srcset="" style="height: 52px;">
@@ -67,17 +67,17 @@
                <li class="nav-item active dropdown">
                 <a class="nav-link dropdown-toggle color-acqua h5" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-                  Crear
+                  Gestionar
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Inmueble</a>
-                  <a class="dropdown-item" href="#">Cartera</a>
-                  <a class="dropdown-item" href="#">Propietario</a>
-                  <a class="dropdown-item" href="#">Status_1</a>
-                  <a class="dropdown-item" href="#">Status_2</a>
-                  <a class="dropdown-item" href="#">Tipologia</a>
-                  <a class="dropdown-item" href="#">Uso</a>
-                  <a class="dropdown-item" href="#">Comercialización</a>
+                  <a class="dropdown-item" href="#">Inmuebles</a>
+                  <a class="dropdown-item" href="{{ path('cartera_index') }}">Carteras</a>
+                  <a class="dropdown-item" href="{{ path('propietario_index') }}">Propietarios</a>
+                  <a class="dropdown-item" href="{{ path('status1_index') }}">Status_1</a>
+                  <a class="dropdown-item" href="{{ path('status2_index') }}">Status_2</a>
+                  <a class="dropdown-item" href="{{ path('tipologia_index') }}">Tipologias</a>
+                  <a class="dropdown-item" href="{{ path('uso_index') }}">Usos</a>
+                  <a class="dropdown-item" href="{{ path('comercializacion_index') }}">Comercializaciones</a>
                 </div>
               </li>
                <li class="nav-item active dropdown">
@@ -86,13 +86,13 @@
                   Registro
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Vendedor</a>
+                  <a class="dropdown-item" href="{{ path('app_register', {tipo : 2}) }}">Vendedor</a>
                 </div>
               </li>
-              <li class="nav-item active justify-content-end">
-                <a class="nav-link color-acqua" href="#" id="logout">
-                    <span class="fa-li"><i style="font-size:38px;" class="fas fa-sign-out-alt color-acqua"></i></span>
-                </a>
+              <li class="nav-item active ml-2">
+                 <a class="nav-link" href="{{ path('app_logout') }}" id="logout">
+                  <span><i style="font-size:38px;" class="fas fa-sign-out-alt color-acqua"></i></span>
+                 </a>
               </li>
             </ul>
           </div>

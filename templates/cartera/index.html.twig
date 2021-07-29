@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cartera index{% endblock %}
+
+{% block body %}
+    <h1>Cartera index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cartera in carteras %}
+            <tr>
+                <td>{{ cartera.id }}</td>
+                <td>{{ cartera.nombre }}</td>
+                <td>
+                    <a href="{{ path('cartera_show', {'id': cartera.id}) }}">show</a>
+                    <a href="{{ path('cartera_edit', {'id': cartera.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('cartera_new') }}">Create new</a>
+{% endblock %}

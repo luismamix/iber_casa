@@ -37,5 +37,15 @@ security:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/logout, roles: [ROLE_VENDEDOR, ROLE_COMPRADOR, ROLE_ADMIN] }
          - { path: ^/index, roles: [ROLE_VENDEDOR, ROLE_COMPRADOR, ROLE_ADMIN] }
+         - { path: ^/register/1, roles: [ROLE_ADMIN] }
+         - { path: ^/register/2, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/register/3, roles: [ROLE_COMPRADOR, ROLE_ADMIN] }
+         - { path: ^/cartera, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/propietario, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/status1, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/status2, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/tipologia, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/uso, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/comercializacion, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

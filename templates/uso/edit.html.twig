@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Uso{% endblock %}
+
+{% block body %}
+    <h1>Edit Uso</h1>
+
+    {{ include('uso/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('uso_index') }}">back to list</a>
+
+    {{ include('uso/_delete_form.html.twig') }}
+{% endblock %}
