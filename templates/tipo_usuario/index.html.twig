@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TipoUsuario index{% endblock %}
+
+{% block body %}
+    <h1>Listados de Tipos de Usuario</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Perfil</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tipo_usuario in tipo_usuarios %}
+            <tr>
+                <td>{{ tipo_usuario.id }}</td>
+                <td>{{ tipo_usuario.perfil }}</td>
+                <td>
+                    <a class="btn btn-primary" role="button" href="{{ path('tipo_usuario_show', {'id': tipo_usuario.id}) }}">Mostrar</a>
+                    <a class="btn btn-secondary" role="button" href="{{ path('tipo_usuario_edit', {'id': tipo_usuario.id}) }}">Modificar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-primary" role="button" href="{{ path('tipo_usuario_new') }}">Crear nuevo</a>
+{% endblock %}

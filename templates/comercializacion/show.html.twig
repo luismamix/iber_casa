@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('comercializacion_index') }}">back to list</a>
+    <a class="btn btn-primary" role="button" href="{{ path('comercializacion_index') }}">Volver al listado</a>
 
-    <a href="{{ path('comercializacion_edit', {'id': comercializacion.id}) }}">edit</a>
+    <a class="btn btn-secondary" role="button" href="{{ path('comercializacion_edit', {'id': comercializacion.id}) }}">Modificar</a>
 
     {{ include('comercializacion/_delete_form.html.twig') }}
 {% endblock %}

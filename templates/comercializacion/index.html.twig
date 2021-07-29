@@ -3,7 +3,7 @@
 {% block title %}Comercializacion index{% endblock %}
 
 {% block body %}
-    <h1>Comercializacion index</h1>
+    <h1>Listado de Comercializaciones</h1>
 
     <table class="table">
         <thead>
@@ -19,8 +19,8 @@
                 <td>{{ comercializacion.id }}</td>
                 <td>{{ comercializacion.descripcion }}</td>
                 <td>
-                    <a href="{{ path('comercializacion_show', {'id': comercializacion.id}) }}">show</a>
-                    <a href="{{ path('comercializacion_edit', {'id': comercializacion.id}) }}">edit</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('comercializacion_show', {'id': comercializacion.id}) }}">Mostrar</a>
+                    <a class="btn btn-secondary" role="button" href="{{ path('comercializacion_edit', {'id': comercializacion.id}) }}">Modificar</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('comercializacion_new') }}">Create new</a>
+    <a class="btn btn-outline-primary" role="button" href="{{ path('comercializacion_new') }}">Crear nuevo</a>
 {% endblock %}

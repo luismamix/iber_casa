@@ -3,9 +3,9 @@
 {% block title %}New Propietario{% endblock %}
 
 {% block body %}
-    <h1>Create new Propietario</h1>
+    <h1>Crear nuevo Propietario</h1>
 
     {{ include('propietario/_form.html.twig') }}
 
-    <a href="{{ path('propietario_index') }}">back to list</a>
+    <a class="btn btn-primary" role="button" href="{{ path('propietario_index') }}">Volver al listado</a>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}Status1 index{% endblock %}
 
 {% block body %}
-    <h1>Status1 index</h1>
+    <h1>Listado de Status1</h1>
 
     <table class="table">
         <thead>
@@ -19,8 +19,8 @@
                 <td>{{ status1.id }}</td>
                 <td>{{ status1.descripcion }}</td>
                 <td>
-                    <a href="{{ path('status1_show', {'id': status1.id}) }}">show</a>
-                    <a href="{{ path('status1_edit', {'id': status1.id}) }}">edit</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('status1_show', {'id': status1.id}) }}">Mostrar</a>
+                    <a class="btn btn-secondary" role="button" href="{{ path('status1_edit', {'id': status1.id}) }}">Modificar</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('status1_new') }}">Create new</a>
+    <a class="btn btn-outline-primary" role="button" href="{{ path('status1_new') }}">Crear nuevo</a>
 {% endblock %}

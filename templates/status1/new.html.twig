@@ -3,9 +3,9 @@
 {% block title %}New Status1{% endblock %}
 
 {% block body %}
-    <h1>Create new Status1</h1>
+    <h1>Crear nuevo Status1</h1>
 
     {{ include('status1/_form.html.twig') }}
 
-    <a href="{{ path('status1_index') }}">back to list</a>
+    <a class="btn btn-primary" role="button" href="{{ path('status1_index') }}">Volver al listado</a>
 {% endblock %}

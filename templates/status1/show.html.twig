@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('status1_index') }}">back to list</a>
+    <a class="btn btn-primary" role="button" href="{{ path('status1_index') }}">Volver al listado</a>
 
-    <a href="{{ path('status1_edit', {'id': status1.id}) }}">edit</a>
+    <a class="btn btn-secondary" role="button" href="{{ path('status1_edit', {'id': status1.id}) }}">Modificar</a>
 
     {{ include('status1/_delete_form.html.twig') }}
 {% endblock %}

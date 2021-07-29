@@ -3,7 +3,7 @@
 {% block title %}Cartera index{% endblock %}
 
 {% block body %}
-    <h1>Cartera index</h1>
+    <h1>Listado Carteras </h1>
 
     <table class="table">
         <thead>
@@ -19,8 +19,8 @@
                 <td>{{ cartera.id }}</td>
                 <td>{{ cartera.nombre }}</td>
                 <td>
-                    <a href="{{ path('cartera_show', {'id': cartera.id}) }}">show</a>
-                    <a href="{{ path('cartera_edit', {'id': cartera.id}) }}">edit</a>
+                    <a class="btn btn-primary" role="button" href="{{ path('cartera_show', {'id': cartera.id}) }}">Mostrar</a>
+                    <a class="btn btn-secondary" role="button" href="{{ path('cartera_edit', {'id': cartera.id}) }}">Modificar</a>
                 </td>
             </tr>
         {% else %}
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('cartera_new') }}">Create new</a>
+    <a class="btn btn-outline-primary" role="button" href="{{ path('cartera_new') }}">Crear nuevo</a>
 {% endblock %}

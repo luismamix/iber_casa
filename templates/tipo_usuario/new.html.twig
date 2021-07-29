@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TipoUsuario{% endblock %}
+
+{% block body %}
+    <h1>Crear nuevo Tipo de Usuario</h1>
+
+    {{ include('tipo_usuario/_form.html.twig') }}
+
+    <a class="btn btn-primary" role="button" href="{{ path('tipo_usuario_index') }}">Volver al listado</a>
+{% endblock %}

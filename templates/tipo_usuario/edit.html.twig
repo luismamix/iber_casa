@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TipoUsuario{% endblock %}
+
+{% block body %}
+    <h1>Modificar TipoUsuario</h1>
+
+    {{ include('tipo_usuario/_form.html.twig', {'button_label': 'Guardar'}) }}
+
+    <a class="btn btn-primary" role="button" href="{{ path('tipo_usuario_index') }}">Volver al listado</a>
+
+    {{ include('tipo_usuario/_delete_form.html.twig') }}
+{% endblock %}
