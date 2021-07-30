@@ -83,11 +83,11 @@ class InmuebleController extends AbstractController
     /**
      * @Route("/new/nuevo_inmueble", name="nuevo_inmueble")
      */
-    public function nuevo_inmueble(): Response
+    public function nuevo_inmueble(Request $request): Response
     {
        //PTE CREATE
-
-        return $this->render('inmueble/form_elegir_tipologia.html.twig', [
+        dump($request);
+        return $this->render('public/index.html.twig', [
             'controller_name' => 'InmuebleController',
         ]);
     }

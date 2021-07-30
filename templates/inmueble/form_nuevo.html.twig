@@ -42,20 +42,20 @@
                    {% elseif tipologia.id == 3 %}
                         {{ include('inmueble/bloque_nave.html.twig') }}
                    {% elseif tipologia.id == 4 %}
-                        {{ include('bloque_oficina.twig') }}
+                        {{ include('inmueble/bloque_oficina.html.twig') }}
                    {% elseif tipologia.id == 5 %}
-                        {{ include('bloque_vivienda.html.twig') }}
-                        {{ include('bloque_piso.html.twig') }}
+                        {{ include('inmueble/bloque_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_piso.html.twig') }}
                    {% elseif tipologia.id == 6 %}
-                        {{ include('bloque_vivienda.html.twig') }}
-                        {{ include('bloque_adosado.html.twig') }}
+                        {{ include('inmueble/bloque_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_adosado.html.twig') }}
                    {% elseif tipologia.id == 7 %}
-                        {{ include('bloque_vivienda.html.twig') }}
-                        {{ include('bloque_chalet.html.twig') }} 
+                        {{ include('inmueble/bloque_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_chalet.html.twig') }} 
                    {% elseif tipologia.id == 8 %}
-                        {{ include('bloque_solar_urbano.html.twig') }}
+                        {{ include('inmueble/bloque_solar_urbano.html.twig') }}
                    {% elseif tipologia.id == 9 %}
-                        {{ include('bloque_solar_rustico.html.twig') }}
+                        {{ include('inmueble/bloque_solar_rustico.html.twig') }}
                    {% endif %}
                 </div>
             </div>
