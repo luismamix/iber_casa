@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Inmueble - Elegir Tipologia{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col">
+        <h1>Crear Inmueble - Elegir Tipologia</h1>
+
+        <form method="POST" action="{{ path('form_nuevo_inmueble') }}">
+            <div class="mb-3">
+                <label for="tipologia" class="form-label">
+                    Tipologia
+                </label>
+                <select name="tipologia" class="form-control" id="tipologia" required>
+                      {% for tipolog in tipologias %}
+                       <option value="{{ tipolog.id }}">{{ tipolog.descripcion }}</option>
+                      {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-outline-primary"> Enviar  </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

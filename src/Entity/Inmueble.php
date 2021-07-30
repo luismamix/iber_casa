@@ -187,6 +187,11 @@ class Inmueble
      */
     private $rutaimagen;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $certenergetico;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -596,6 +601,18 @@ class Inmueble
     public function setRutaimagen(?string $rutaimagen): self
     {
         $this->rutaimagen = $rutaimagen;
+
+        return $this;
+    }
+
+    public function getCertenergetico(): ?bool
+    {
+        return $this->certenergetico;
+    }
+
+    public function setCertenergetico(?bool $certenergetico): self
+    {
+        $this->certenergetico = $certenergetico;
 
         return $this;
     }

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Inmueble{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+    <div class="col">
+        <h1>Crear Inmueble</h1>
+
+       {#  <h2>{{tipologia.id}} : {{tipologia.descripcion}}</h2> #}
+
+        <form method="POST" action="{{ path('nuevo_inmueble') }}">
+              
+              {# PTE: pintar el form sgun la tipologia #}
+               {#
+                {{ include('bloque_inmueble.html.twig') }}
+                {{ include('bloque_edificio.html.twig') }}
+                {{ include('bloque_local.html.twig') }}
+                {{ include('bloque_nave.html.twig') }}
+                {{ include('bloque_oficina.twig') }}
+                {{ include('bloque_solar_urbano.html.twig') }}
+                {{ include('bloque_solar_rustico.html.twig') }}
+                {{ include('bloque_edificio.html.twig') }}
+                {{ include('bloque_vivienda.html.twig') }}
+                {{ include('bloque_piso.html.twig') }}
+                {{ include('bloque_adosado.html.twig') }}
+                {{ include('bloque_chalet.html.twig') }} 
+              #}
+            
+            <div class="row">
+                {# columna izq - COMUN 
+                columna centro - COMUN #}
+                        {{ include('inmueble/bloque_inmueble.html.twig') }}
+                {# columna der - ESPECIFICO #}
+                <div class="col-md-4">
+                   {% if tipologia.id == 1 %}
+                        {{ include('inmueble/bloque_edificio.html.twig') }}
+                   {% elseif tipologia.id == 2 %}
+                        {{ include('inmueble/bloque_local.html.twig') }}
+                   {% elseif tipologia.id == 3 %}
+                        {{ include('inmueble/bloque_nave.html.twig') }}
+                   {% elseif tipologia.id == 4 %}
+                        {{ include('bloque_oficina.twig') }}
+                   {% elseif tipologia.id == 5 %}
+                        {{ include('bloque_vivienda.html.twig') }}
+                        {{ include('bloque_piso.html.twig') }}
+                   {% elseif tipologia.id == 6 %}
+                        {{ include('bloque_vivienda.html.twig') }}
+                        {{ include('bloque_adosado.html.twig') }}
+                   {% elseif tipologia.id == 7 %}
+                        {{ include('bloque_vivienda.html.twig') }}
+                        {{ include('bloque_chalet.html.twig') }} 
+                   {% elseif tipologia.id == 8 %}
+                        {{ include('bloque_solar_urbano.html.twig') }}
+                   {% elseif tipologia.id == 9 %}
+                        {{ include('bloque_solar_rustico.html.twig') }}
+                   {% endif %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
