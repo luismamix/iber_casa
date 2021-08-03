@@ -2,34 +2,28 @@
 
 {% block title %}Crear Inmueble{% endblock %}
 
-{% block body %}
+{% block javascripts %}
+      <script src="{{ asset('js/inmueble.js') }}" type="text/javascript"></script>
+{% endblock %}
 
+{% block body %}
 
 <div class="row">
     <div class="col">
-        <h1>Crear Inmueble</h1>
+
+          <div class="row mt-5">
+               <div class="col-md-5">
+                     <h1>Crear {{tipologia.descripcion}} 
+                     <span><i style="font-size:38px;" class="fas fa-magic text-dark ml-1"></i></span></h1>
+               </div>
+          </div>
+       
 
        {#  <h2>{{tipologia.id}} : {{tipologia.descripcion}}</h2> #}
 
         <form method="POST" action="{{ path('nuevo_inmueble') }}">
-              
-              {# PTE: pintar el form sgun la tipologia #}
-               {#
-                {{ include('bloque_inmueble.html.twig') }}
-                {{ include('bloque_edificio.html.twig') }}
-                {{ include('bloque_local.html.twig') }}
-                {{ include('bloque_nave.html.twig') }}
-                {{ include('bloque_oficina.twig') }}
-                {{ include('bloque_solar_urbano.html.twig') }}
-                {{ include('bloque_solar_rustico.html.twig') }}
-                {{ include('bloque_edificio.html.twig') }}
-                {{ include('bloque_vivienda.html.twig') }}
-                {{ include('bloque_piso.html.twig') }}
-                {{ include('bloque_adosado.html.twig') }}
-                {{ include('bloque_chalet.html.twig') }} 
-              #}
             
-            <div class="row">
+            <div class="row mt-1">
                 {# columna izq - COMUN 
                 columna centro - COMUN #}
                         {{ include('inmueble/bloque_inmueble.html.twig') }}
@@ -59,8 +53,13 @@
                    {% endif %}
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-secondary">Guardar</button>
+            
+            <div class="row mt-4">
+                 <div class="col d-flex justify-content-center">
+                    <button type="submit" class="btn btn-secondary btn-lg">Guardar</button>
+                 </div>
+            </div>
+            
         </form>
     </div>
 </div>

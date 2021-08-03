@@ -7,21 +7,36 @@
 
 <div class="row">
     <div class="col">
-        <h1>Crear Inmueble - Elegir Tipologia</h1>
 
-        <form method="POST" action="{{ path('form_nuevo_inmueble') }}">
-            <div class="mb-3">
-                <label for="tipologia" class="form-label">
-                    Tipologia
-                </label>
-                <select name="tipologia" class="form-control" id="tipologia" required>
-                      {% for tipolog in tipologias %}
-                       <option value="{{ tipolog.id }}">{{ tipolog.descripcion }}</option>
-                      {% endfor %}
-                </select>
+        <div class="row mt-5">
+            <div class="col ">
+                <h1>Elegir Tipologia
+            <span><i style="font-size:38px;" class="fas fa-crosshairs text-dark ml-1"></i></span></h1>
             </div>
-            
-            <button type="submit" class="btn btn-outline-primary"> Enviar  </button>
+        </div>
+        
+        <form method="POST" action="{{ path('form_nuevo_inmueble') }}">
+            <div class="row mt-1">
+                <div class="col-6 ">
+                    <div class="mb-3">
+                        <label for="tipologia" class="form-label">
+                            Tipologia
+                        </label>
+                        <select name="tipologia" class="form-control" id="tipologia" required>
+                            {% for tipolog in tipologias %}
+                            <option value="{{ tipolog.id }}">{{ tipolog.descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                 <div class="col d-flex justify-content-center">
+                      <button type="submit" class="btn btn-outline-primary"> Enviar  </button>
+                </div>
+            </div>
+          
         </form>
     </div>
 </div>
