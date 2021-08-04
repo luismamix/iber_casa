@@ -48,6 +48,7 @@ security:
          - { path: ^/tipologia, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/uso, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/comercializacion, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/tipo/usuario, roles: ROLE_ADMIN }
          - { path: ^/, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

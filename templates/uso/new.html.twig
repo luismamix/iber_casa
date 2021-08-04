@@ -3,8 +3,9 @@
 {% block title %}New Uso{% endblock %}
 
 {% block body %}
-    <h1>Crear nuevo Uso</h1>
-
+    <h1>Crear nuevo Uso
+    <span><i style="font-size:38px;" class="fas fa-magic text-dark ml-1"></i></span></h1>
+    
     {{ include('uso/_form.html.twig') }}
 
     <a class="btn btn-primary" role="button" href="{{ path('uso_index') }}">Volver al listado</a>

@@ -202,7 +202,7 @@ class InmuebleController extends AbstractController
             $datosform['porcentajeconstruido']=$request->request->get('porcentajeconstruido');
         }
 
-        dump($datosform);
+        //dump($datosform);
         
         //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.
         try {

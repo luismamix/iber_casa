@@ -59,8 +59,46 @@
             <label class="col-sm-4 col-form-label" for="uso">Uso</label>
             <div class="col-sm-8">
             <select class="custom-select custom-select-md" name="uso" required>
+
+                {# los edificios, locales pueden seleccionar usos residencial, comercial, restauracion, turistico, industrial.
+                las naves pueden seleccionar uso comercial, agricola, ganadero. 
+                las oficinas solo pueden seleccionar uso comercial.
+                los pisos, adosados, chalets pueden seleccionar usos residencial, turistico.  
+                los suelos urbanos pueden seleccionar usos residencial, comercial, restauracion, turistico, industrial.
+                los suelos rusticos pueden seleccionar usos forestal, agricola, ganadero. #}
+                
                 {% for uso in usos %}
-                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                    {# edificios, locales #}
+                     {% if tipologia.id == 1 or tipologia.id == 2%}
+                         {% if uso.id != 6 and  uso.id != 7 and uso.id != 8 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {# naves #}
+                     {% elseif tipologia.id == 3 %}
+                         {% if uso.id != 1 and  uso.id != 3 and uso.id != 4  and uso.id != 5 and uso.id != 6 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {# oficinas #}
+                     {% elseif tipologia.id == 4 %}
+                         {% if uso.id != 1 and  uso.id != 3 and uso.id != 4  and uso.id != 5 and uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {# pisos, adosados, chalets #}
+                     {% elseif tipologia.id == 5 or tipologia.id == 6 or tipologia.id == 7 %}
+                         {% if uso.id != 2 and  uso.id != 3 and uso.id != 5 and uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {# suelos urbanos #}
+                    {% elseif tipologia.id == 8 %}
+                         {% if uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {# suelos rusticos #}
+                    {% elseif tipologia.id == 9 %}
+                         {% if uso.id != 1 and uso.id != 2 and  uso.id != 3 and uso.id != 4  and uso.id != 5 %}
+                            <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                         {% endif %}
+                    {% endif %}
                 {% endfor %}
             </select>
              </div>
@@ -68,7 +106,7 @@
          <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="comercializacion">Comercializacion</label>
             <div class="col-sm-8">
-            <select class="custom-select custom-select-md" name="comercializacion" required>
+            <select class="custom-select custom-select-md" name="comercializacion" id="comercializacion" required>
                 {% for comercializacion in comercializaciones %}
                 <option value= {{comercializacion.id}} > {{comercializacion.descripcion}} </option>
                 {% endfor %}
@@ -87,9 +125,9 @@
  </div>
  <div class="col-md-4">
     <div class="form-group row">
-        <label class="col-sm-4 col-form-label" for="precio">Precio</label>
+        <label class="col-sm-4 col-form-label" id="label_precio" for="precio">Importe</label>
         <div class="col-sm-8">
-        <input type="number" class="form-control form-control-md" name="precio" placeholder="precio" min="1" step="0.01" required>
+        <input type="number" class="form-control form-control-md" name="precio" id="precio" placeholder="Importe" min="1" step="0.01" required>
         </div>
     </div>
     <div class="form-group row">

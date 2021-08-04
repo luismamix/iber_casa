@@ -3,7 +3,8 @@
 {% block title %}Editar Cartera{% endblock %}
 
 {% block body %}
-    <h1>Modificar Cartera</h1>
+    <h1>Modificar Cartera
+    <span><i style="font-size:38px;" class="fas fa-pen text-dark ml-1"></i></span></h1>
     {{ include('cartera/_form.html.twig', {'button_label': 'Guardar'}) }}
     
     <a class="btn btn-primary" role="button" href="{{ path('cartera_index') }}">Volver al listado</a>

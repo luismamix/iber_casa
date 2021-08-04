@@ -1,7 +1,8 @@
 window.addEventListener('load', init);
 
 function init() {
-    //crear el campo porcentaje construido 
+
+    //crear el campo "porcentaje construido"
     $( "#status2" ).change(function() {
        if ($("#status2").val() == 3){
            let porcentaje= " <label class='col-sm-4 col-form-label' for='rutaimagen'>Porcentaje Construido</label>" +
@@ -13,4 +14,16 @@ function init() {
             $('#div_porcentaje_construido').html("");
        }
       });
+
+    //cambiar el texto del label y place holder (alquiler / precio) dependiendo de si seleccionas comercializacion (alquiler / venta).
+    $("#comercializacion").change(function (e) { 
+        if(this.value == 1){
+            $('#label_precio').text('Importe');
+            $('#precio').attr('placeholder', 'Importe');
+        }else if(this.value == 2){
+            $('#label_precio').text('Precio');
+            $('#precio').attr('placeholder', 'Precio');
+        }
+        
+    });
 }
