@@ -1,3 +1,11 @@
+h1,h2,li{
+    font-family: 'Orelega One', 'Roboto', cursive;
+}
+
+input,label,button,p{
+    font-family:Arial, Helvetica, sans-serif;
+ }
+
 .color-acqua{
     color: aqua !important;
 }
@@ -6,3 +14,21 @@
     color:#c6ff00 !important;
 }
 
+.bg-acqua{
+    background: #01FEFE !important;
+}
+.bg-lime{
+    color:#c6ff00 !important;
+}
+
+.bg-marine{
+    background: #061FB2 !important;
+}
+
+.text-marine{
+    color:#061FB2 !important;
+}
+
+.bg-marine > span{
+    color:#01FEFE !important
+}

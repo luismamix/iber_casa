@@ -21,7 +21,7 @@
 
        {#  <h2>{{tipologia.id}} : {{tipologia.descripcion}}</h2> #}
 
-        <form method="POST" action="{{ path('nuevo_inmueble') }}">
+        <form method="POST" action="{{ path('nuevo_inmueble') }} " enctype = "multipart/form-data">
             
             <div class="row mt-1">
                 {# columna izq - COMUN 

@@ -1,0 +1,49 @@
+<form method="POST" action="{{ path('inmueble_index') }}">
+    <div class="row ">
+        <div class="col-md-3 mt-1">
+            <div class="form-group">
+                <label for="fcomercializacion" class="form-label text-light bg-dark">
+                    Buscar por Comercializacion
+                </label>
+                <select name="fcomercializacion" class="form-control" id="fcomercializacion">
+                    {% for comercializacion in comercializaciones %}
+                        <option value="{{ comercializacion.id }}">{{ comercializacion.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+         <div class="col-md-3 mt-1">
+            <div class="form-group">
+                <label for="ftipologia" class="form-label text-light bg-dark">
+                    Buscar por Tipo de Inmueble
+                </label>
+                    <select name="ftipologia" class="form-control" id="ftipologia">
+                        {% for tipolog in tipologias %}
+                            <option value="{{ tipolog.id }}">{{ tipolog.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-3 mt-2">
+            <div class="form-group row mt-4">
+                <span><i style="font-size:32px;" class="col fas fa-search text-light bg-dark"></i></span>
+                <div class="col">
+                <input type="text" class="form-control form-control-md" name="fcampo_busqueda" placeholder="localidad, id. inmueble" minlength="5">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 d-flex justify-content-center">
+            <div class="form-group row mt-4">
+                {# <a class="btn btn-primary btn-lg" role="button" type="submit" href="{{ path('inmueble_index',{chorizo de parametros}) }}">Buscar</a> #}
+                 <button type="submit" class="btn btn-outline-light btn-lg"> Buscar </button>
+            </div>
+        </div>
+    </div>
+
+   {#  <div class="row mt-4">
+        <div class="col d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary"> Enviar  </button>
+        </div>
+    </div> #}
+                    
+</form>

@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello InmuebleController!{% endblock %}
+{% block title %}Listado de Inmuebles{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="row">
+        <div class="col">
+            <div class="row mt-5">
+                <div class="col ">
+                    <h1>Listado inmuebles
+                <span><i style="font-size:38px;" class="fas fa-clipboard-list text-dark ml-1"></i></span></h1>
+                </div>
+            </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div class="row mt-1 bg-dark rounded">
+                <div class="col">
+                {# form filtros #}
+                    {{  include('inmueble/_form_filtros_inmueble.html.twig')}}
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col ">
+                   {#  listado fake #}
+                   <div class="row" >
+                       <div class="col-md-3">
+                            {# PRUEBA OK <img src="{{asset('images/img_610c196fb5db7.JPG')}}" alt="" srcset="" class="img-fluid"> #}
+                            <img src="{{asset('images/img_610c184f08aa0.JPG')}}" alt="" srcset="" class="img-fluid rounded">
+                       </div>
+                       <div class="col-md-9  bg-acqua rounded">
+                            <h1 class="text-white">Tipologia, localidad</h1>
+                            <h2 class="text-white">6000000 €</h2>
+                            <p class="text-marine" >Vivienda en una sola planta, con 5 dormitorios (unos de ellos despacho), 
+                            salón independiente con chimenea y cristales blindados de alta gama, cocina de 20 m2.</p>
+                            <div class="bg-marine rounded">
+                                <span class="ml-2"><i class="far fa-square"></i> 44 m2</span><span class="ml-2"><i class="fas fa-bed"></i> 3 </span><span class="ml-2"><i class="fas fa-toilet"></i> 2 </span>
+                            </div>
+                       </div>
+                   </div>
+                </div>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/src/Controller/InmuebleController.php'|file_link(0) }}">src/Controller/InmuebleController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/templates/inmueble/index.html.twig'|file_link(0) }}">templates/inmueble/index.html.twig</a></code></li>
-    </ul>
-</div>
+        </div>
+    </div>
+
 {% endblock %}

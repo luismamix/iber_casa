@@ -21,12 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
 class InmuebleController extends AbstractController
 {
     /**
-     * @Route("/", name="inmueble_index")
+     * @Route("/index", name="inmueble_index")
      */
-    public function index(): Response
+    public function index( ComercializacionRepository $com, TipologiaRepository $tr, Request $request): Response
     {
+        $comercializaciones = $com->findAll();
+        $tipologias = $tr->findAll();
+        dump($request);
+
         return $this->render('inmueble/index.html.twig', [
             'controller_name' => 'InmuebleController',
+            'comercializaciones' => $comercializaciones,
+            'tipologias' =>$tipologias
         ]);
     }
 
@@ -95,6 +101,7 @@ class InmuebleController extends AbstractController
     {
         //recuperar datos del formulario :O
         $datosform =[];
+        $rutaProyecto="";
 
         if ($request->request->get('tipologia') != null) {
             $datosform['tipologia']=$request->request->get('tipologia');
@@ -117,8 +124,11 @@ class InmuebleController extends AbstractController
         if ($request->request->get('comercializacion') != null) {
             $datosform['comercializacion']=$request->request->get('comercializacion');
         }
-        if ($request->request->get('rutaimagen') != null) {
-            $datosform['rutaimagen']=$request->request->get('rutaimagen');
+        // los campos tipo file  se obtienen del $request->files->get('rutaimagen')
+        if ($request->files->get('rutaimagen') != null) {
+            $datosform['rutaimagen']=$request->files->get('rutaimagen');
+            //obtener la ruta del proyecto
+            $rutaProyecto = $this->getParameter('kernel.project_dir');
         }
         if ($request->request->get('precio') != null) {
             $datosform['precio']=$request->request->get('precio');
@@ -206,7 +216,7 @@ class InmuebleController extends AbstractController
         
         //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.
         try {
-            $inmueble =$im->crearInmueble($datosform, $tr, $ca, $pro, $st1, $st2, $uso, $com);
+            $inmueble =$im->crearInmueble($datosform, $tr, $ca, $pro, $st1, $st2, $uso, $com, $rutaProyecto);
             $inmueble->getId();
         } catch(\Exception $ex) {
             //$ex->getMessage();

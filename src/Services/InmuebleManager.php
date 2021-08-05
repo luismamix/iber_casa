@@ -27,7 +27,8 @@ class InmuebleManager{
                                 Status1Repository $st1,
                                 Status2Repository $st2,
                                 UsoRepository $uso,
-                                ComercializacionRepository $com){
+                                ComercializacionRepository $com,
+                                string $rutaProyecto){
     $inmueble = new Inmueble();
     
     //setear los datos recibidos
@@ -60,7 +61,19 @@ class InmuebleManager{
       $inmueble->setUso($uso);
     }
     if(isset($datos['rutaimagen'])){
-      $inmueble->setRutaimagen($datos['rutaimagen']);
+
+      //obtener el fichero
+      $file=$datos['rutaimagen'];
+      
+      //construir nombre fichero
+      $filename =  'img_'.uniqid().'.JPG';
+     
+      //moverlo a la ruta public/images
+      $file->move( $rutaProyecto.'/public/images/', $filename);
+      
+      //setear la ruta de la imagen + filename
+      $inmueble->setRutaimagen("images/". $filename);
+      
     }
     if(isset($datos['precio'])){
       $inmueble->setPrecio($datos['precio']);
