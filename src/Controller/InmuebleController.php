@@ -102,6 +102,7 @@ class InmuebleController extends AbstractController
         //recuperar datos del formulario :O
         $datosform =[];
         $rutaProyecto="";
+        dump($request);
 
         if ($request->request->get('tipologia') != null) {
             $datosform['tipologia']=$request->request->get('tipologia');
@@ -125,8 +126,10 @@ class InmuebleController extends AbstractController
             $datosform['comercializacion']=$request->request->get('comercializacion');
         }
         // los campos tipo file  se obtienen del $request->files->get('rutaimagen')
+        // OJO el $request->files->get('rutaimagen') devuelve un array con los ficheros seleccionados.
         if ($request->files->get('rutaimagen') != null) {
-            $datosform['rutaimagen']=$request->files->get('rutaimagen');
+            $datosform['rutaimagenes'] = $request->files->get('rutaimagen');
+            
             //obtener la ruta del proyecto
             $rutaProyecto = $this->getParameter('kernel.project_dir');
         }

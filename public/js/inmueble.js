@@ -26,4 +26,15 @@ function init() {
         }
         
     });
+
+    //detectar cuando se selecciona algun archivo y mostrar l num de archivos seleccionados.
+    $("input[type=file]").on('change',function(){
+        if(this.files.length == 1){
+            $('#nfiles').html(this.files.length + " archivo.");
+        }else if(this.files.length > 1){
+            $('#nfiles').html(this.files.length + " archivos.");
+        }else{
+            $('#nfiles').html("Ningún archivo seleccionado.");
+        }
+    });
 }

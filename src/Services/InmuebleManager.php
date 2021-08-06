@@ -11,6 +11,7 @@ use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
 use App\Repository\UsoRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class InmuebleManager{
     private $em;
@@ -60,21 +61,30 @@ class InmuebleManager{
       $uso = $uso->find($datos['uso']);
       $inmueble->setUso($uso);
     }
-    if(isset($datos['rutaimagen'])){
-
-      //obtener el fichero
-      $file=$datos['rutaimagen'];
-      
-      //construir nombre fichero
-      $filename =  'img_'.uniqid().'.JPG';
-     
-      //moverlo a la ruta public/images
-      $file->move( $rutaProyecto.'/public/images/', $filename);
-      
-      //setear la ruta de la imagen + filename
-      $inmueble->setRutaimagen("images/". $filename);
-      
+    if(isset($datos['rutaimagenes'])){
+      //dump($datos['rutaimagenes']);
+      $cadena="";
+      //variable para controlar cual es el ultimo fichero y q no ponga punto y coma.
+      $i=1;
+      //obtener los ficheros
+      foreach ($datos['rutaimagenes'] as $file) {
+        //obtener la extension del archivo
+        $extension = $file->guessExtension();
+        //construir nombre fichero
+        $filename =  'img_'.uniqid().'.'.$extension;
+        //moverlo a la ruta public/images
+        $file->move( $rutaProyecto.'/public/images/', $filename);
+        //concatenar las rutas de los ficheros con punto y coma, y guardarlo en un string.
+        if($i < count($datos['rutaimagenes'])){
+          $cadena .= "images/".$filename.";";
+        }else{
+          $cadena .= "images/".$filename;
+        }
+        $i++;
+      }
+      $inmueble->setRutaimagen($cadena);
     }
+
     if(isset($datos['precio'])){
       $inmueble->setPrecio($datos['precio']);
     }

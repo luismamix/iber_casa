@@ -143,10 +143,14 @@
            
     </div>  
     <div class="custom-file row ml-1 mb-4">
-        <label class="col custom-file-label" for="rutaimagen">Selec. Foto del inmueble</label>
+        <label class="col custom-file-label" for="rutaimagen[]">Selec. Fotos del inmueble</label>
         <div class="col">
-        <input type="file" class="custom-file-input" name="rutaimagen">    
+        <input type="file" class="custom-file-input" name="rutaimagen[]" multiple>    
         </div>
-        
+        <div class="row mt-2">
+            <div class="col">
+                <span class="text-primary" id="nfiles"></span>
+            </div>
+        </div>
     </div>
  </div>
