@@ -193,6 +193,12 @@
         <input type="text" class="form-control form-control-md" name="provincia" value="{{inmueble.provincia | default('')}}" placeholder="provincia" minlength="5" required>
         </div>
     </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="descripcion">Descripcion</label>
+        <div class="col-sm-8">
+        <textarea class="form-control" id="descripcion" name="descripcion"  rows="4" minlength="5">{{inmueble.descripcion | default('')}}</textarea>
+        </div>
+    </div>
     <div class="form-group row" id="div_porcentaje_construido">
          {% if inmueble.status2.id == 3 %} 
             <label class="col-sm-4 col-form-label" for="rutaimagen">% Construido</label>
@@ -201,7 +207,7 @@
             </div>
          {% endif %}  
     </div>  
-    <div class="custom-file row ml-1 mb-4">
+    <div class="custom-file ml-1 mb-4 row">
         <label class="col custom-file-label" for="rutaimagen[]">Añadir Fotos al inmueble</label>
         <div class="col">
         <input type="file" class="custom-file-input" name="rutaimagen[]" multiple>    

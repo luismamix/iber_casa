@@ -192,6 +192,16 @@ class Inmueble
      */
     private $certenergetico;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $terrazas;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $descripcion;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -613,6 +623,30 @@ class Inmueble
     public function setCertenergetico(?bool $certenergetico): self
     {
         $this->certenergetico = $certenergetico;
+
+        return $this;
+    }
+
+    public function getTerrazas(): ?int
+    {
+        return $this->terrazas;
+    }
+
+    public function setTerrazas(?int $terrazas): self
+    {
+        $this->terrazas = $terrazas;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): self
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }

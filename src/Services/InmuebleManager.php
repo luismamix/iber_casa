@@ -34,8 +34,7 @@ class InmuebleManager
         Status2Repository $st2,
         UsoRepository $uso,
         ComercializacionRepository $com
-    )
-    {
+    ) {
         $this->im = $im;
         $this->em = $em;
         $this->tr = $tr;
@@ -47,10 +46,7 @@ class InmuebleManager
         $this->com = $com;
     }
 
-    public function crearInmueble(
-        array $datos,
-        string $rutaProyecto
-    )
+    public function crearInmueble(array $datos, string $rutaProyecto)
     {
         $inmueble = new Inmueble();
     
@@ -188,6 +184,12 @@ class InmuebleManager
         if (isset($datos['porcentajeconstruido'])) {
             $inmueble->setPorcentajeconstruido($datos['porcentajeconstruido']);
         }
+        if (isset($datos['descripcion'])) {
+            $inmueble->setDescripcion($datos['descripcion']);
+        }
+        if (isset($datos['terrazas'])) {
+            $inmueble->setTerrazas($datos['terrazas']);
+        }
     
         //persistir y flushear
         $this->em->persist($inmueble);
@@ -196,15 +198,13 @@ class InmuebleManager
         return $inmueble;
     }
 
-    public function modificarInmueble(
-        array $datos,
-        string $rutaProyecto
-    )
-    {    
+    public function modificarInmueble(array $datos, string $rutaProyecto)
+    {
         $inmueble=null;
+        //dump($datos);
 
-        if(isset($datos['id'])){
-          $inmueble = $this->im->find($datos['id']);
+        if (isset($datos['id'])) {
+            $inmueble = $this->im->find($datos['id']);
         }
        
         //setear los datos recibidos
@@ -257,14 +257,13 @@ class InmuebleManager
                 }
                 $i++;
             }
-            
+            //añadir fotos al inmueble
             $rutasexistentes = $inmueble->getRutaimagen();
             if ($rutasexistentes == "" or $rutasexistentes == null) {
                 $inmueble->setRutaimagen($cadena);
-            }else{
-              $inmueble->setRutaimagen($rutasexistentes.";".$cadena);
+            } else {
+                $inmueble->setRutaimagen($rutasexistentes.";".$cadena);
             }
-           
         }
 
         if (isset($datos['precio'])) {
@@ -279,76 +278,135 @@ class InmuebleManager
         if (isset($datos['provincia'])) {
             $inmueble->setProvincia($datos['provincia']);
         }
+        //dependiendo de la tipologia algunos de estos campos no son obligatorios.
+        //al modificar algun checkbox del formulario o dejar en blanco algun campo, q no sean obligatorios,
+        //la unica manera de darse cuenta es comprobar si vuelve el campo por el request, sino vuelve hay q setear
+        //a null los campos no obligatorios(los q admiten null).
         if (isset($datos['m2construido'])) {
             $inmueble->setM2construido($datos['m2construido']);
+        } else {
+            $inmueble->setM2construido(null);
         }
         if (isset($datos['anoconstruccion'])) {
             $inmueble->setAnoconstruccion($datos['anoconstruccion']);
         }
         if (isset($datos['plantas'])) {
             $inmueble->setPlantas($datos['plantas']);
+        } else {
+            $inmueble->setPlantas(null);
         }
         if (isset($datos['banos'])) {
             $inmueble->setBanos($datos['banos']);
+        } else {
+            $inmueble->setBanos(null);
         }
         if (isset($datos['licactividad'])) {
             $inmueble->setLicactividad($datos['licactividad']);
+        } else {
+            $inmueble->setLicactividad(null);
         }
         if (isset($datos['certenergetico'])) {
             $inmueble->setCertenergetico($datos['certenergetico']);
+        } else {
+            $inmueble->setCertenergetico(null);
         }
         if (isset($datos['m2parcela'])) {
             $inmueble->setM2parcela($datos['m2parcela']);
+        } else {
+            $inmueble->setM2parcela(null);
         }
         if (isset($datos['cocina'])) {
             $inmueble->setCocina($datos['cocina']);
+        } else {
+            $inmueble->setCocina(null);
         }
         if (isset($datos['aireacondicionado'])) {
             $inmueble->setAireacondicionado($datos['aireacondicionado']);
+        } else {
+            $inmueble->setAireacondicionado(null);
         }
         if (isset($datos['calefaccion'])) {
             $inmueble->setCalefaccion($datos['calefaccion']);
+        } else {
+            $inmueble->setCalefaccion(null);
         }
         if (isset($datos['garaje'])) {
             $inmueble->setGaraje($datos['garaje']);
+        } else {
+            $inmueble->setGaraje(null);
         }
         if (isset($datos['dormitorios'])) {
             $inmueble->setDormitorios($datos['dormitorios']);
+        } else {
+            $inmueble->setDormitorios(null);
         }
         if (isset($datos['piscina'])) {
             $inmueble->setPiscina($datos['piscina']);
+        } else {
+            $inmueble->setPiscina(null);
         }
         if (isset($datos['ascensor'])) {
             $inmueble->setAscensor($datos['ascensor']);
+        } else {
+            $inmueble->setAscensor(null);
         }
         if (isset($datos['trastero'])) {
             $inmueble->setTrastero($datos['trastero']);
+        } else {
+            $inmueble->setTrastero(null);
         }
         if (isset($datos['buhardilla'])) {
             $inmueble->setBuhardilla($datos['buhardilla']);
+        } else {
+            $inmueble->setBuhardilla(null);
         }
         if (isset($datos['m2superficie'])) {
             $inmueble->setM2superficie($datos['m2superficie']);
+        } else {
+            $inmueble->setM2superficie(null);
         }
         if (isset($datos['suministroagua'])) {
             $inmueble->setSuministroagua($datos['suministroagua']);
+        } else {
+            $inmueble->setSuministroagua(null);
         }
         if (isset($datos['suministroelectricidad'])) {
             $inmueble->setSuministroelectricidad($datos['suministroelectricidad']);
+        } else {
+            $inmueble->setSuministroelectricidad(null);
         }
         if (isset($datos['pozo'])) {
             $inmueble->setPozo($datos['pozo']);
+        } else {
+            $inmueble->setPozo(null);
         }
         if (isset($datos['aperos'])) {
             $inmueble->setAperos($datos['aperos']);
+        } else {
+            $inmueble->setAperos(null);
         }
         if (isset($datos['salas'])) {
             $inmueble->setSalas($datos['salas']);
+        } else {
+            $inmueble->setSalas(null);
         }
         if (isset($datos['porcentajeconstruido'])) {
             $inmueble->setPorcentajeconstruido($datos['porcentajeconstruido']);
+        } else {
+            $inmueble->setPorcentajeconstruido(null);
         }
-    
+        if (isset($datos['descripcion'])) {
+            $inmueble->setDescripcion($datos['descripcion']);
+        }else{
+            $inmueble->setDescripcion(null);
+        }
+        if (isset($datos['terrazas'])) {
+            $inmueble->setTerrazas($datos['terrazas']);
+        }else{
+            $inmueble->setTerrazas(null);
+        }
+
+
         //persistir y flushear
         $this->em->persist($inmueble);
         $this->em->flush();

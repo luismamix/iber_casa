@@ -90,10 +90,8 @@ class InmuebleController extends AbstractController
     /**
      * @Route("/new/nuevo_inmueble", name="nuevo_inmueble")
      */
-    public function nuevo_inmueble(
-        Request $request,
-        InmuebleManager $im
-    ): Response {
+    public function nuevo_inmueble(Request $request, InmuebleManager $im): Response
+    {
         //recuperar datos del formulario :O
         $datosform =[];
         $rutaProyecto="";
@@ -209,6 +207,12 @@ class InmuebleController extends AbstractController
         if ($request->request->get('porcentajeconstruido') != null) {
             $datosform['porcentajeconstruido']=$request->request->get('porcentajeconstruido');
         }
+        if ($request->request->get('descripcion') != null) {
+            $datosform['descripcion']=$request->request->get('descripcion');
+        }
+        if ($request->request->get('terrazas') != null) {
+            $datosform['terrazas']=$request->request->get('terrazas');
+        }
 
         //dump($datosform);
         
@@ -248,8 +252,7 @@ class InmuebleController extends AbstractController
         Status2Repository $s2r,
         ComercializacionRepository $com,
         UsoRepository $ur
-    ): Response
-    {
+    ): Response {
         $inmueble  = $im->find($id);
         $tipologias = $tr->findAll();
         $carteras = $cr->findAll();
@@ -278,8 +281,7 @@ class InmuebleController extends AbstractController
     public function modificar_inmueble(
         Request $request,
         InmuebleManager $im
-    ): Response
-    {
+    ): Response {
         //recuperar datos del formulario :O
         $datosform =[];
         $rutaProyecto="";
@@ -397,6 +399,12 @@ class InmuebleController extends AbstractController
         }
         if ($request->request->get('porcentajeconstruido') != null) {
             $datosform['porcentajeconstruido']=$request->request->get('porcentajeconstruido');
+        }
+        if ($request->request->get('descripcion') != null) {
+            $datosform['descripcion']=$request->request->get('descripcion');
+        }
+        if ($request->request->get('terrazas') != null) {
+            $datosform['terrazas']=$request->request->get('terrazas');
         }
 
         //dump($datosform);
