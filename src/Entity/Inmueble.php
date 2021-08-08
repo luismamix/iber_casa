@@ -160,7 +160,7 @@ class Inmueble
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $suminostroagua;
+    private $suministroagua;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -533,14 +533,14 @@ class Inmueble
         return $this;
     }
 
-    public function getSuminostroagua(): ?bool
+    public function getSuministroagua(): ?bool
     {
-        return $this->suminostroagua;
+        return $this->suministroagua;
     }
 
-    public function setSuminostroagua(?bool $suminostroagua): self
+    public function setSuministroagua(?bool $suministroagua): self
     {
-        $this->suminostroagua = $suminostroagua;
+        $this->suministroagua = $suministroagua;
 
         return $this;
     }

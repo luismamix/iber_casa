@@ -1,0 +1,223 @@
+ <div class="col-md-4">
+         <div class="form-group row" hidden>
+            <label class="col-sm-4 col-form-label" for="id">Id Inmueble</label>
+            <div class="col-sm-8"> 
+            <input type="number" class="form-control form-control-md" name="id"  value="{{inmueble.id | default('')}}" placeholder="id" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="tipologia">Tipologia</label>
+            <div class="col-sm-8"> 
+            <select class="custom-select custom-select-md" name="tipologia" readonly>
+                <option value= {{inmueble.tipologia.id}} selected> {{inmueble.tipologia.descripcion}} </option>
+            </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="cartera">Cartera</label>
+            <div class="col-sm-8">
+            <select class="custom-select custom-select-md" name="cartera" required>
+                {% for cartera in carteras %}
+                    {% if cartera.id == inmueble.cartera.id %}
+                         <option value = {{cartera.id}} selected> {{cartera.nombre}} </option>
+                    {% else %}
+                         <option value= {{cartera.id}} > {{cartera.nombre}} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+         <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="propietario">Propietario</label>
+             <div class="col-sm-8"> 
+            <select class="custom-select custom-select-md" name="propietario" required>
+                {% for propietario in propietarios %}
+                    {% if propietario.id == inmueble.propietario.id %}
+                         <option value = {{propietario.id}} selected> {{propietario.nombre}} </option>
+                    {% else %}
+                          <option value= {{propietario.id}} > {{propietario.nombre}} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+         <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="status1">Status 1</label>
+            <div class="col-sm-8">
+            <select class="custom-select custom-select-md" name="status1" required>
+                {% for status in status1 %}
+                    {% if status.id == inmueble.status1.id %}
+                         <option value= {{status.id}} selected> {{status.descripcion}} </option>
+                    {% else %}
+                          <option value= {{status.id}} > {{status.descripcion}} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+         <div class="form-group row">
+             <label class="col-sm-4 col-form-label" for="status2">Status 2</label>
+             <div class="col-sm-8">
+             <select class="custom-select custom-select-md" id= "status2" name="status2" required>
+                {% for status in status2 %}
+                    {# los inmuebles q no sean suelos, cuando se selecciona status2 (3 - en construccion) se debe registrar el porcentaje construido. #}
+                    {# los suelos (tipologias 8 y 9 no debe aparecer el status2 (3 en construccion)). #}
+                    {% if inmueble.tipologia.id == 8 or inmueble.tipologia.id == 9 %}
+                        {% if status.id != 3 %}
+                            {% if status.id == inmueble.status2.id %}
+                                <option value= {{status.id}} selected> {{status.descripcion}} </option>
+                            {% else %}
+                                <option value= {{status.id}} > {{status.descripcion}} </option>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if status.id == inmueble.status2.id %}
+                            <option value= {{status.id}} selected> {{status.descripcion}} </option>
+                        {% else %}
+                            <option value= {{status.id}} > {{status.descripcion}} </option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+             </select>
+             </div>
+        </div>
+         <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="uso">Uso</label>
+            <div class="col-sm-8">
+            <select class="custom-select custom-select-md" name="uso" required>
+
+                {# los edificios, locales pueden seleccionar usos residencial, comercial, restauracion, turistico, industrial.
+                las naves pueden seleccionar uso comercial, agricola, ganadero. 
+                las oficinas solo pueden seleccionar uso comercial.
+                los pisos, adosados, chalets pueden seleccionar usos residencial, turistico.  
+                los suelos urbanos pueden seleccionar usos residencial, comercial, restauracion, turistico, industrial.
+                los suelos rusticos pueden seleccionar usos forestal, agricola, ganadero. #}
+                
+                {% for uso in usos %}
+                    {# edificios, locales #}
+                     {% if inmueble.tipologia.id == 1 or inmueble.tipologia.id == 2%}
+                         {% if uso.id != 6 and  uso.id != 7 and uso.id != 8 %}
+                             {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {# naves #}
+                     {% elseif inmueble.tipologia.id == 3 %}
+                         {% if uso.id != 1 and  uso.id != 3 and uso.id != 4  and uso.id != 5 and uso.id != 6 %}
+                            {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {# oficinas #}
+                     {% elseif inmueble.tipologia.id == 4 %}
+                         {% if uso.id != 1 and  uso.id != 3 and uso.id != 4  and uso.id != 5 and uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                             {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {# pisos, adosados, chalets #}
+                     {% elseif inmueble.tipologia.id == 5 or inmueble.tipologia.id == 6 or inmueble.tipologia.id == 7 %}
+                         {% if uso.id != 2 and  uso.id != 3 and uso.id != 5 and uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                             {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {# suelos urbanos #}
+                    {% elseif inmueble.tipologia.id == 8 %}
+                         {% if uso.id != 6 and uso.id != 7 and uso.id != 8 %}
+                             {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {# suelos rusticos #}
+                    {% elseif inmueble.tipologia.id == 9 %}
+                         {% if uso.id != 1 and uso.id != 2 and  uso.id != 3 and uso.id != 4  and uso.id != 5 %}
+                             {% if uso.id == inmueble.uso.id %}
+                                <option value= {{uso.id}} selected> {{uso.descripcion}} </option>
+                             {% else %}
+                                <option value= {{uso.id}} > {{uso.descripcion}} </option>
+                             {% endif %}
+                         {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+         <div class="form-group row">
+            <label class="col-sm-4 col-form-label" for="comercializacion">Comercializacion</label>
+            <div class="col-sm-8">
+            <select class="custom-select custom-select-md" name="comercializacion" id="comercializacion" required>
+                {% for comercializacion in comercializaciones %}
+                    {% if comercializacion.id == inmueble.comercializacion.id %}
+                        <option value= {{comercializacion.id}} selected> {{comercializacion.descripcion}} </option>
+                    {% else %}
+                        <option value= {{comercializacion.id}} > {{comercializacion.descripcion}} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+ </div>
+ <div class="col-md-4">
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" id="label_precio" for="precio">{% if inmueble.comercializacion.id == 1 %} Importe {% elseif inmueble.comercializacion.id == 2 %} Precio  {% endif %}</label>
+        <div class="col-sm-8">
+        <input type="number" class="form-control form-control-md" name="precio" value="{{inmueble.precio}}"  id="precio" {% if inmueble.comercializacion.id == 1 %} placeholder="Importe" {% elseif inmueble.comercializacion.id == 2 %} placeholder="Precio"  {% endif %} min="1" step="0.01" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="direccion">Direccion</label>
+        <div class="col-sm-8">
+        <input type="text" class="form-control form-control-md" name="direccion" value = "{{ inmueble.direccion  | default('')}}" placeholder="direccion" minlength="5" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="localidad">Localidad</label>
+        <div class="col-sm-8">
+        <input type="text" class="form-control form-control-md" name="localidad" value="{{inmueble.localidad  | default('')}}" placeholder="localidad" minlength="5" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="provincia">Provincia</label>
+        <div class="col-sm-8">
+        <input type="text" class="form-control form-control-md" name="provincia" value="{{inmueble.provincia | default('')}}" placeholder="provincia" minlength="5" required>
+        </div>
+    </div>
+    <div class="form-group row" id="div_porcentaje_construido">
+         {% if inmueble.status2.id == 3 %} 
+            <label class="col-sm-4 col-form-label" for="rutaimagen">% Construido</label>
+            <div class="col-sm-8">
+            <input type="number" class="form-control form-control-md" name="porcentajeconstruido"  value="{{inmueble.porcentajeconstruido | default('')}}" placeholder="% construido" min="1" max="100" step="0.01" required>  
+            </div>
+         {% endif %}  
+    </div>  
+    <div class="custom-file row ml-1 mb-4">
+        <label class="col custom-file-label" for="rutaimagen[]">Añadir Fotos al inmueble</label>
+        <div class="col">
+        <input type="file" class="custom-file-input" name="rutaimagen[]" multiple>    
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <span class="text-primary" id="nfiles"></span>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                {% set archivos = inmueble.rutaimagen | split(';') %}
+                {% for archivo in archivos %}
+                    <p><span class="text-primary"> {{archivo}}</span></p>
+                {% endfor %} 
+            </div>
+        </div>
+    </div>
+ </div>

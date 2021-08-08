@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modificar Inmueble{% endblock %}
+
+{% block javascripts %}
+      <script src="{{ asset('js/inmueble.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col">
+
+          <div class="row mt-5">
+               <div class="col-md-8">
+                     <h1>Modificar Id. Inmueble: {{inmueble.id}}
+                     <span><i style="font-size:38px;" class="fas fa-pen text-dark ml-1"></i></span></h1>
+               </div>
+          </div>
+
+        <form method="POST" action="{{ path('modificar_inmueble') }} " enctype = "multipart/form-data">
+            
+            <div class="row mt-1">
+                {# columna izq - COMUN 
+                columna centro - COMUN #}
+                        {{ include('inmueble/bloque_edit_inmueble.html.twig') }}
+                {# columna der - ESPECIFICO #}
+                <div class="col-md-4">
+                   {% if inmueble.tipologia.id == 1 %}
+                        {{ include('inmueble/bloque_edit_edificio.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 2 %}
+                        {{ include('inmueble/bloque_edit_local.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 3 %}
+                        {{ include('inmueble/bloque_edit_nave.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 4 %}
+                        {{ include('inmueble/bloque_edit_oficina.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 5 %}
+                        {{ include('inmueble/bloque_edit_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_edit_piso.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 6 %}
+                        {{ include('inmueble/bloque_edit_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_edit_adosado.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 7 %}
+                        {{ include('inmueble/bloque_edit_vivienda.html.twig') }}
+                        {{ include('inmueble/bloque_edit_chalet.html.twig') }} 
+                   {% elseif inmueble.tipologia.id == 8 %}
+                        {{ include('inmueble/bloque_edit_solar_urbano.html.twig') }}
+                   {% elseif inmueble.tipologia.id == 9 %}
+                        {{ include('inmueble/bloque_edit_solar_rustico.html.twig') }}
+                   {% endif %}
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                 <div class="col d-flex justify-content-center">
+                    <button type="submit" class="btn btn-secondary btn-lg">Guardar</button>
+                 </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock %}

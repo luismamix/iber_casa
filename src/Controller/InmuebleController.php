@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CarteraRepository;
 use App\Repository\ComercializacionRepository;
+use App\Repository\InmuebleRepository;
 use App\Repository\PropietarioRepository;
 use App\Repository\Status1Repository;
 use App\Repository\Status2Repository;
@@ -23,7 +24,7 @@ class InmuebleController extends AbstractController
     /**
      * @Route("/index", name="inmueble_index")
      */
-    public function index( ComercializacionRepository $com, TipologiaRepository $tr, Request $request): Response
+    public function index(ComercializacionRepository $com, TipologiaRepository $tr, Request $request): Response
     {
         $comercializaciones = $com->findAll();
         $tipologias = $tr->findAll();
@@ -89,20 +90,14 @@ class InmuebleController extends AbstractController
     /**
      * @Route("/new/nuevo_inmueble", name="nuevo_inmueble")
      */
-    public function nuevo_inmueble(Request $request, 
-                                   InmuebleManager $im, 
-                                   TipologiaRepository $tr,
-                                   CarteraRepository $ca, 
-                                   PropietarioRepository $pro,
-                                   Status1Repository $st1,
-                                   Status2Repository $st2,
-                                   UsoRepository $uso,
-                                   ComercializacionRepository $com ): Response
-    {
+    public function nuevo_inmueble(
+        Request $request,
+        InmuebleManager $im
+    ): Response {
         //recuperar datos del formulario :O
         $datosform =[];
         $rutaProyecto="";
-        dump($request);
+        //dump($request);
 
         if ($request->request->get('tipologia') != null) {
             $datosform['tipologia']=$request->request->get('tipologia');
@@ -219,9 +214,9 @@ class InmuebleController extends AbstractController
         
         //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.
         try {
-            $inmueble =$im->crearInmueble($datosform, $tr, $ca, $pro, $st1, $st2, $uso, $com, $rutaProyecto);
+            $inmueble =$im->crearInmueble($datosform, $rutaProyecto);
             $inmueble->getId();
-        } catch(\Exception $ex) {
+        } catch (\Exception $ex) {
             //$ex->getMessage();
             //$ex->getCode();
             //$ex->getTraceAsString();
@@ -234,7 +229,195 @@ class InmuebleController extends AbstractController
         //mensaje de si s ha creado.
         $this->addFlash('success', 'Inmueble creado.');
 
-        //redireccionar 
+        //redireccionar
+        return $this->render('public/index.html.twig', [
+                'controller_name' => 'InmuebleController',
+            ]);
+    }
+
+    /**
+     * @Route("/edit/form_modificar_inmueble/{id}", name="form_modificar_inmueble", requirements={"id"="\d+"})
+     */
+    public function form_modificar_inmueble(
+        $id,
+        InmuebleRepository $im,
+        TipologiaRepository $tr,
+        CarteraRepository $cr,
+        PropietarioRepository $pr,
+        Status1Repository $s1r,
+        Status2Repository $s2r,
+        ComercializacionRepository $com,
+        UsoRepository $ur
+    ): Response
+    {
+        $inmueble  = $im->find($id);
+        $tipologias = $tr->findAll();
+        $carteras = $cr->findAll();
+        $propietarios = $pr->findAll();
+        $status1 = $s1r->findAll();
+        $status2 = $s2r->findAll();
+        $comercializaciones = $com->findAll();
+        $usos = $ur->findAll();
+
+        return $this->render('inmueble/form_modificar_inmueble.html.twig', [
+            'controller_name' => 'InmuebleController',
+            'inmueble' => $inmueble,
+            'tipologias' => $tipologias,
+            'carteras' => $carteras,
+            'propietarios' => $propietarios,
+            'status1' => $status1,
+            'status2' => $status2,
+            'comercializaciones' => $comercializaciones,
+            'usos' => $usos
+        ]);
+    }
+
+    /**
+     * @Route("/edit/modificar_inmueble", name="modificar_inmueble")
+     */
+    public function modificar_inmueble(
+        Request $request,
+        InmuebleManager $im
+    ): Response
+    {
+        //recuperar datos del formulario :O
+        $datosform =[];
+        $rutaProyecto="";
+        //dump($request);
+
+        if ($request->request->get('id') != null) {
+            $datosform['id']=$request->request->get('id');
+        }
+        if ($request->request->get('tipologia') != null) {
+            $datosform['tipologia']=$request->request->get('tipologia');
+        }
+        if ($request->request->get('cartera') != null) {
+            $datosform['cartera']=$request->request->get('cartera');
+        }
+        if ($request->request->get('propietario') != null) {
+            $datosform['propietario']=$request->request->get('propietario');
+        }
+        if ($request->request->get('status1') != null) {
+            $datosform['status1']=$request->request->get('status1');
+        }
+        if ($request->request->get('status2') != null) {
+            $datosform['status2']=$request->request->get('status2');
+        }
+        if ($request->request->get('uso') != null) {
+            $datosform['uso']=$request->request->get('uso');
+        }
+        if ($request->request->get('comercializacion') != null) {
+            $datosform['comercializacion']=$request->request->get('comercializacion');
+        }
+        // los campos tipo file  se obtienen del $request->files->get('rutaimagen')
+        // OJO el $request->files->get('rutaimagen') devuelve un array con los ficheros seleccionados.
+        if ($request->files->get('rutaimagen') != null) {
+            $datosform['rutaimagenes'] = $request->files->get('rutaimagen');
+            
+            //obtener la ruta del proyecto
+            $rutaProyecto = $this->getParameter('kernel.project_dir');
+        }
+        if ($request->request->get('precio') != null) {
+            $datosform['precio']=$request->request->get('precio');
+        }
+        if ($request->request->get('direccion') != null) {
+            $datosform['direccion']=$request->request->get('direccion');
+        }
+        if ($request->request->get('localidad') != null) {
+            $datosform['localidad']=$request->request->get('localidad');
+        }
+        if ($request->request->get('provincia') != null) {
+            $datosform['provincia']=$request->request->get('provincia');
+        }
+        if ($request->request->get('m2construido') != null) {
+            $datosform['m2construido']=$request->request->get('m2construido');
+        }
+        if ($request->request->get('anoconstruccion') != null) {
+            $datosform['anoconstruccion']=$request->request->get('anoconstruccion');
+        }
+        if ($request->request->get('plantas') != null) {
+            $datosform['plantas']=$request->request->get('plantas');
+        }
+        if ($request->request->get('banos') != null) {
+            $datosform['banos']=$request->request->get('banos');
+        }
+        if ($request->request->get('licactividad') != null) {
+            $datosform['licactividad']=$request->request->get('licactividad');
+        }
+        if ($request->request->get('certenergetico') != null) {
+            $datosform['certenergetico']=$request->request->get('certenergetico');
+        }
+        if ($request->request->get('m2parcela') != null) {
+            $datosform['m2parcela']=$request->request->get('m2parcela');
+        }
+        if ($request->request->get('cocina') != null) {
+            $datosform['cocina']=$request->request->get('cocina');
+        }
+        if ($request->request->get('aireacondicionado') != null) {
+            $datosform['aireacondicionado']=$request->request->get('aireacondicionado');
+        }
+        if ($request->request->get('calefaccion') != null) {
+            $datosform['calefaccion']=$request->request->get('calefaccion');
+        }
+        if ($request->request->get('dormitorios') != null) {
+            $datosform['dormitorios']=$request->request->get('dormitorios');
+        }
+        if ($request->request->get('garaje') != null) {
+            $datosform['garaje']=$request->request->get('garaje');
+        }
+        if ($request->request->get('piscina') != null) {
+            $datosform['piscina']=$request->request->get('piscina');
+        }
+        if ($request->request->get('ascensor') != null) {
+            $datosform['ascensor']=$request->request->get('ascensor');
+        }
+        if ($request->request->get('trastero') != null) {
+            $datosform['trastero']=$request->request->get('trastero');
+        }
+        if ($request->request->get('buhardilla') != null) {
+            $datosform['buhardilla']=$request->request->get('buhardilla');
+        }
+        if ($request->request->get('m2superficie') != null) {
+            $datosform['m2superficie']=$request->request->get('m2superficie');
+        }
+        if ($request->request->get('suministroagua') != null) {
+            $datosform['suministroagua']=$request->request->get('suministroagua');
+        }
+        if ($request->request->get('suministroelectricidad') != null) {
+            $datosform['suministroelectricidad']=$request->request->get('suministroelectricidad');
+        }
+        if ($request->request->get('pozo') != null) {
+            $datosform['pozo']=$request->request->get('pozo');
+        }
+        if ($request->request->get('aperos') != null) {
+            $datosform['aperos']=$request->request->get('aperos');
+        }
+        if ($request->request->get('salas') != null) {
+            $datosform['salas']=$request->request->get('salas');
+        }
+        if ($request->request->get('porcentajeconstruido') != null) {
+            $datosform['porcentajeconstruido']=$request->request->get('porcentajeconstruido');
+        }
+
+        //dump($datosform);
+        
+        //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.
+        try {
+            $inmueble =$im->modificarInmueble($datosform, $rutaProyecto);
+            $inmueble->getId();
+        } catch (\Exception $ex) {
+            //$ex->getMessage();
+            //$ex->getCode();
+            //$ex->getTraceAsString();
+            $this->addFlash('error al modificar el inmueble', $ex->getMessage());
+            return $this->render('public/index.html.twig', [
+                'controller_name' => 'InmuebleController',
+            ]);
+        }
+        
+        //mensaje de si s ha modificado.
+        $this->addFlash('success', 'Inmueble modificado.');
+    
         return $this->render('public/index.html.twig', [
             'controller_name' => 'InmuebleController',
         ]);
