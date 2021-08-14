@@ -22,18 +22,40 @@ use Symfony\Component\HttpFoundation\Request;
 class InmuebleController extends AbstractController
 {
     /**
-     * @Route("/index", name="inmueble_index")
+     * @Route("/index/{page}", name="inmueble_index", requirements={"page"="\d+"})
      */
-    public function index(ComercializacionRepository $com, TipologiaRepository $tr, Request $request): Response
+    public function index($page = 1, ComercializacionRepository $com, TipologiaRepository $tr, InmuebleRepository $ir, Request $request): Response
     {
         $comercializaciones = $com->findAll();
         $tipologias = $tr->findAll();
-        dump($request);
+        //filtrar por
+        $uso= $request->query->get('uso');
+        $tipologia=$request->query->get('tipologia');
+        $status1=$request->query->get('status1');
+        //sacar el total de inmuebles aplicando el filtro, devuelve un entero
+        $totalinmuebles = $ir->findBy_CUSTOM($uso, $tipologia, $status1);
+        $numTotalPaginas=0;
+        if($totalinmuebles % 10 == 0)
+            $numTotalPaginas = intdiv($totalinmuebles,10);
+        else
+            $numTotalPaginas =intdiv($totalinmuebles,10) + 1;
+
+        
+        //resultado paginado
+        $inmuebles = $ir->findBy_CUSTOM_Paginado($page,$uso,$tipologia,$status1);
+        //dump($request);
 
         return $this->render('inmueble/index.html.twig', [
             'controller_name' => 'InmuebleController',
             'comercializaciones' => $comercializaciones,
-            'tipologias' =>$tipologias
+            'tipologias' =>$tipologias,
+            'inmuebles' => $inmuebles,
+            'page' => $page,
+            'uso' => $uso,
+            'tipologia' => $tipologia,
+            'status1' => $status1,
+            'numTotalPaginas' => $numTotalPaginas,
+            'totalinmuebles' => $totalinmuebles
         ]);
     }
 

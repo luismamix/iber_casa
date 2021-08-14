@@ -18,9 +18,9 @@
                   Residencial
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Piso</a>
-                  <a class="dropdown-item" href="#">Adosado</a>
-                  <a class="dropdown-item" href="#">Chalet</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 1, tipologia: 5, status1: 1 } )}}">Piso</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 1, tipologia: 6, status1: 1 } )}}">Adosado</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 1, tipologia: 7, status1: 1 } )}}">Chalet</a>
                 </div>
               </li>
               <li class="nav-item active dropdown">
@@ -29,9 +29,9 @@
                   Comercial
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Nave</a>
-                <a class="dropdown-item" href="#">Local</a>
-                  <a class="dropdown-item" href="#">Oficina</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 2, tipologia: 3, status1: 1 } )}}">Nave</a>
+                <a class="dropdown-item" href="{{path('inmueble_index', {uso: 2, tipologia: 2, status1: 1 } )}}">Local</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 2, tipologia: 4, status1: 1 } )}}">Oficina</a>
                 </div>
               </li>
               <li class="nav-item active dropdown">
@@ -40,8 +40,8 @@
                   Suelos
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Urbano</a>
-                  <a class="dropdown-item" href="#">Rústico</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {tipologia: 8, status1: 1 } )}}">Urbano</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {tipologia: 9, status1: 1 } )}}">Rústico</a>
                 </div>
               </li>
                <li class="nav-item active dropdown">
@@ -50,9 +50,9 @@
                   Turístico
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Piso</a>
-                  <a class="dropdown-item" href="#">Chalet</a>
-                  <a class="dropdown-item" href="#">Edificio</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 4, tipologia: 5, status1: 1 } )}}">Piso</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 4, tipologia: 7, status1: 1 } )}}">Chalet</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 4, tipologia: 1, status1: 1 } )}}">Edificio</a>
                 </div>
               </li>
                <li class="nav-item active dropdown">
@@ -61,7 +61,7 @@
                   Restauración
                 </a>
                 <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Local</a>
+                  <a class="dropdown-item" href="{{path('inmueble_index', {uso: 3, tipologia: 2, status1: 1 } )}}">Local</a>
                 </div>
               </li>
                <li class="nav-item active dropdown">

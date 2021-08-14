@@ -18,25 +18,140 @@
                     {{  include('inmueble/_form_filtros_inmueble.html.twig')}}
                 </div>
             </div>
+            <div class="row mt-4">
+                {# pag actual #}
+                <span class="ml-2 h4 text-primary"> Página {{page}} - numTotalPaginas {{numTotalPaginas}} - totalInmuebles {{totalinmuebles}}</span>
+            </div>
+             <div class="row mt-1">
+                {# paginacion #}
+                <div class="col border-top border-bottom border-primary pt-2 pb-2">
+                <a class ="" href="{{path('inmueble_index', {page: 1, uso: uso, tipologia: tipologia, status1: status1} )}}"> <span class="h5"><< </span> </a>
+                {% if page > 1 %}
+                  <a class ="ml-2" href="{{path('inmueble_index', {page: page-1 , uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page-1}}</span></a>
+                {% endif %}
+                 <a class ="ml-2" href="{{path('inmueble_index', {page: page, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page}}</span></a>
+                {% if page < numTotalPaginas %}
+                 <a class ="ml-2" href="{{path('inmueble_index', {page: page+1, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page+1}}</span></a>
+                {% endif %}
+                  <a class ="ml-2" href="{{path('inmueble_index', {page: numTotalPaginas, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5"> >></span> </a>               
+                </div>
+            </div>
             
             <div class="row mt-3">
                 <div class="col ">
-                   {#  listado fake #}
-                   <div class="row" >
-                       <div class="col-md-3">
-                            {# PRUEBA OK <img src="{{asset('images/img_610c196fb5db7.JPG')}}" alt="" srcset="" class="img-fluid"> #}
-                            <img src="{{asset('images/img_610c184f08aa0.JPG')}}" alt="" srcset="" class="img-fluid rounded">
-                       </div>
-                       <div class="col-md-9  bg-acqua rounded">
-                            <h1 class="text-white">Tipologia, localidad</h1>
-                            <h2 class="text-white">6000000 €</h2>
-                            <p class="text-marine" >Vivienda en una sola planta, con 5 dormitorios (unos de ellos despacho), 
-                            salón independiente con chimenea y cristales blindados de alta gama, cocina de 20 m2.</p>
-                            <div class="bg-marine rounded">
-                                <span class="ml-2"><i class="far fa-square"></i> 44 m2</span><span class="ml-2"><i class="fas fa-bed"></i> 3 </span><span class="ml-2"><i class="fas fa-toilet"></i> 2 </span>
-                            </div>
-                       </div>
-                   </div>
+                   {% for inmueble in inmuebles%}
+                    <div class="row mt-5" >
+                        <div class="col-md-3">
+                                {% set images = inmueble.rutaimagen | split(';') %}
+                                <img src="{{asset(images | first)}}" alt="img principal" srcset="" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-9 bg-acqua rounded">
+                                <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
+                                <h2 class="text-white ">{{inmueble.precio}} €</h2>
+                                <p class="text-marine">{{inmueble.descripcion}}</p>
+                                <div class="bg-marine rounded">
+                                    {# customizar la info + iconos para cada tipologia #}
+                                    {% if inmueble.tipologia.id == 1 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span>
+                                        {% if inmueble.plantas | default %} <span class="ml-2"><i class="fas fa-layer-group"></i> {{inmueble.plantas}} </span> {% endif %} 
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 2 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.licactividad | default %} <span class="ml-2"><i class="fas fa-stamp"></i> Lic. Actividad </span> {% endif %} 
+                                        {% if inmueble.certenergetico | default %} <span class="ml-2"><i class="fas fa-stamp"></i> Cert. Energético </span> {% endif %}
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 3 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.plantas | default %} <span class="ml-2"><i class="fas fa-layer-group"></i> {{inmueble.plantas}} </span> {% endif %} 
+                                        {% if inmueble.m2parcela | default %} <span class="ml-2"><i class="fas fa-vector-square"></i> {{inmueble.m2parcela}} m2 parcela </span> {% endif %}
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 4 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.salas | default %} <span class="ml-2"><i class="fas fa-handshake"></i> {{inmueble.salas}} Salas </span> {% endif %}
+                                        {% if inmueble.aireacondicionado | default %} <span class="ml-2"><i class="fas fa-fan"></i> Aire Acondicionado</span> {% endif %} 
+                                        {% if inmueble.calefaccion | default %} <span class="ml-2"><i class="fas fa-sun"></i> Calefacción</span> {% endif %} 
+                                        {% if inmueble.cocina | default %} <span class="ml-2"><i class="fas fa-pizza-slice"></i> Cocina</span> {% endif %}
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 5 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.dormitorios | default %} <span class="ml-2"><i class="fas fa-bed"></i> {{inmueble.dormitorios}}</span> {% endif %} 
+                                        {% if inmueble.cocina | default %} <span class="ml-2"><i class="fas fa-pizza-slice"></i> Cocina</span> {% endif %}
+                                        {% if inmueble.calefaccion | default %} <span class="ml-2"><i class="fas fa-sun"></i> Calefacción</span> {% endif %} 
+                                        {% if inmueble.aireacondicionado | default %} <span class="ml-2"><i class="fas fa-fan"></i> Aire Acondicionado</span> {% endif %}
+                                        {% if inmueble.garaje | default %} <span class="ml-2"><i class="fas fa-parking"></i> Garaje</span> {% endif %}
+                                        {% if inmueble.piscina | default %} <span class="ml-2"><i class="fas fa-swimming-pool"></i> Piscina</span> {% endif %} 
+                                        {% if inmueble.terrazas | default %} 
+                                            {% if inmueble.terrazas > 1 %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terrazas</span> 
+                                             {% else %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terraza</span> 
+                                             {% endif %}
+                                        {% endif %}
+                                        {% if inmueble.ascensor | default %} <span class="ml-2"><i class="fas fa-arrow-up"></i> Ascensor</span> {% endif %}
+                                        {% if inmueble.trastero | default %} <span class="ml-2"><i class="fas fa-warehouse"></i> Trastero</span> {% endif %}
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 6 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.dormitorios | default %} <span class="ml-2"><i class="fas fa-bed"></i> {{inmueble.dormitorios}}</span> {% endif %} 
+                                        {% if inmueble.cocina | default %} <span class="ml-2"><i class="fas fa-pizza-slice"></i> Cocina</span> {% endif %}
+                                        {% if inmueble.calefaccion | default %} <span class="ml-2"><i class="fas fa-sun"></i> Calefacción</span> {% endif %} 
+                                        {% if inmueble.aireacondicionado | default %} <span class="ml-2"><i class="fas fa-fan"></i> Aire Acondicionado</span> {% endif %}
+                                        {% if inmueble.garaje | default %} <span class="ml-2"><i class="fas fa-parking"></i> Garaje</span> {% endif %}
+                                        {% if inmueble.piscina | default %} <span class="ml-2"><i class="fas fa-swimming-pool"></i> Piscina</span> {% endif %} 
+                                        {% if inmueble.terrazas | default %} 
+                                            {% if inmueble.terrazas > 1 %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terrazas</span> 
+                                             {% else %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terraza</span> 
+                                             {% endif %}
+                                        {% endif %}
+                                        {% if inmueble.buhardilla | default %} <span class="ml-2"><i class="fas fa-chess-rook"></i> Buhardilla</span> {% endif %}
+                                        {% if inmueble.plantas | default %} <span class="ml-2"><i class="fas fa-layer-group"></i> {{inmueble.plantas}} </span> {% endif %}
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 7 %}
+                                        <span class="ml-2"><i class="far fa-square"></i> {{inmueble.m2construido}} m2 </span>
+                                        <span class="ml-2"><i class="fas fa-calendar-times"></i> {{inmueble.anoconstruccion}} </span> 
+                                        {% if inmueble.banos | default %} <span class="ml-2"><i class="fas fa-toilet"></i> {{inmueble.banos}} </span> {% endif %} 
+                                        {% if inmueble.dormitorios | default %} <span class="ml-2"><i class="fas fa-bed"></i> {{inmueble.dormitorios}}</span> {% endif %} 
+                                        {% if inmueble.cocina | default %} <span class="ml-2"><i class="fas fa-pizza-slice"></i> Cocina</span> {% endif %}
+                                        {% if inmueble.calefaccion | default %} <span class="ml-2"><i class="fas fa-sun"></i> Calefacción</span> {% endif %} 
+                                        {% if inmueble.aireacondicionado | default %} <span class="ml-2"><i class="fas fa-fan"></i> Aire Acondicionado</span> {% endif %}
+                                        {% if inmueble.garaje | default %} <span class="ml-2"><i class="fas fa-parking"></i> Garaje</span> {% endif %}
+                                        {% if inmueble.piscina | default %} <span class="ml-2"><i class="fas fa-swimming-pool"></i> Piscina</span> {% endif %} 
+                                        {% if inmueble.terrazas | default %} 
+                                            {% if inmueble.terrazas > 1 %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terrazas</span> 
+                                             {% else %}
+                                                 <span class="ml-2"><i class="fas fa-umbrella-beach"></i> {{inmueble.terrazas}} Terraza</span> 
+                                             {% endif %}
+                                        {% endif %}
+                                        {% if inmueble.m2parcela | default %} <span class="ml-2"><i class="fas fa-vector-square"></i> {{inmueble.m2parcela}} m2 parcela </span> {% endif %}
+                                        {% if inmueble.plantas | default %} <span class="ml-2"><i class="fas fa-layer-group"></i> {{inmueble.plantas}} </span> {% endif %} 
+                                        {% if inmueble.porcentajeconstruido | default %} <span class="ml-2"><i class="fas fa-hard-hat"></i> {{inmueble.porcentajeconstruido}} % construido</span> {% endif %} 
+                                    {% elseif inmueble.tipologia.id == 8 %}
+                                        <span class="ml-2"><i class="fas fa-vector-square"></i> {{inmueble.m2superficie}} m2 superficie</span>
+                                        {% if inmueble.suministroagua | default %} <span class="ml-2"><i class="fas fa-faucet"></i> Suministro agua</span> {% endif %}
+                                        {% if inmueble.suministroelectricidad | default %} <span class="ml-2"><i class="fas fa-lightbulb"></i> Suministro electrididad</span> {% endif %}
+                                    {% elseif inmueble.tipologia.id == 9 %}
+                                        <span class="ml-2"><i class="fas fa-vector-square"></i> {{inmueble.m2superficie}} m2 superficie</span>
+                                        {% if inmueble.pozo | default %} <span class="ml-2"><i class="fas fa-water"></i> Pozo</span> {% endif %}
+                                        {% if inmueble.aperos | default %} <span class="ml-2"><i class="fas fa-warehouse"></i> Nave de Aperos</span> {% endif %}      
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                   {% endfor %}
                 </div>
             </div>
 

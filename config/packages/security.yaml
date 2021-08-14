@@ -40,7 +40,6 @@ security:
          - { path: ^/register/1, roles: [ROLE_ADMIN] }
          - { path: ^/register/2, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/register/3, roles: [ROLE_COMPRADOR, ROLE_ADMIN] } 
-         - { path: ^/inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/cartera, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/propietario, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/status1, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }

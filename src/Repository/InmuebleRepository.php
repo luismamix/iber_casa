@@ -23,25 +23,113 @@ class InmuebleRepository extends ServiceEntityRepository
     //  * @return Inmueble[] Returns an array of Inmueble objects
     //  */
     
-    public function findAllOptimized()
+    public function findBy_CUSTOM_Paginado($page, $uso, $tipologia, $status1)
     {
-        $em =  $this->getEntityManager();
+        $em = $this->getEntityManager();
+        $where="";
+        $fields = array();
 
+        if ($uso != null) {
+            echo "uso : $uso ,";
+            $fields[] = " inm.uso = $uso ";
+        }
+        if ($tipologia != null) {
+            echo "tipologia : $tipologia, ";
+            $fields[] = " inm.tipologia = $tipologia ";
+        }
+        if ($status1 != null) {
+            echo "status1 : $status1";
+            $fields[] = " inm.status1 = $status1 ";
+        }
+
+        switch (count($fields)) {
+            case 0:
+                $where="";
+                break;
+            case 1:
+                $where=" WHERE $fields[0] ";
+                break;
+            case 2:
+                $where=" WHERE $fields[0] AND $fields[1] ";
+                break;
+            case 3:
+                $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] ";
+                break;
+            default:
+                # code... ACK ACK
+                break;
+        }
+       
         $q = $em->createQuery(
-            "SELECT in, ca, com, pro, st1, st2, tpl, u 
-            FROM App\Entity\Inmueble in
-            JOIN in.cartera ca
-            JOIN in.comercializacion com
-            JOIN in.propietario pro
-            JOIN in.status1 st1
-            JOIN in.status2 st2
-            JOIN in.tipologia tpl
-            JOIN in.uso u
-            ORDER BY in.id ASC"
+            "SELECT inm, ca, com, pro, st1, st2, tpl, u 
+            FROM App\Entity\Inmueble inm
+            JOIN inm.cartera ca
+            JOIN inm.comercializacion com
+            JOIN inm.propietario pro
+            JOIN inm.status1 st1
+            JOIN inm.status2 st2
+            JOIN inm.tipologia tpl
+            JOIN inm.uso u
+            $where
+            ORDER BY inm.tipologia, inm.id"
         );
+        $q->setMaxResults(10);
+        $q->setFirstResult(($page -1)*10);
+        // returns an array of Product objects
+        return $q->getResult();
+    }
+  
+    public function findBy_CUSTOM($uso, $tipologia, $status1)
+    {
+        $em = $this->getEntityManager();
+        $where="";
+        $fields = array();
 
-         // returns an array of Product objects
-         return $q->getResult();
+        if ($uso != null) {
+            $fields[] = " inm.uso = $uso ";
+        }
+        if ($tipologia != null) {
+            $fields[] = " inm.tipologia = $tipologia ";
+        }
+        if ($status1 != null) {
+            $fields[] = " inm.status1 = $status1 ";
+        }
+
+        switch (count($fields)) {
+            case 0:
+                $where="";
+                break;
+            case 1:
+                $where=" WHERE $fields[0] ";
+                break;
+            case 2:
+                $where=" WHERE $fields[0] AND $fields[1] ";
+                break;
+            case 3:
+                $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] ";
+                break;
+            default:
+                # code... ACK ACK
+                break;
+        }
+       
+        $q = $em->createQuery(
+            "SELECT COUNT(inm.id)
+            FROM App\Entity\Inmueble inm
+            JOIN inm.cartera ca
+            JOIN inm.comercializacion com
+            JOIN inm.propietario pro
+            JOIN inm.status1 st1
+            JOIN inm.status2 st2
+            JOIN inm.tipologia tpl
+            JOIN inm.uso u
+            $where
+            ORDER BY inm.tipologia, inm.id"
+        );
+        
+        // devuelve el nº d inmuebles 
+        return $q->getSingleScalarResult();
+        //return $q->getResult();
     }
 
     // /**
