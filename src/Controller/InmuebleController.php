@@ -20,20 +20,46 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/inmueble")
  */
 class InmuebleController extends AbstractController
-{
+{   //listado de inmuebles para los roles ROLE_ADMIN, ROLE_VENDEDOR
     /**
-     * @Route("/index/{page}", name="inmueble_index", requirements={"page"="\d+"})
+     * @Route("/index/comercializacion/todos/{page}", name="inmueble_index_comercializacion_todos", requirements={"page"="\d+"}, methods={"GET","POST"})
      */
-    public function index($page = 1, ComercializacionRepository $com, TipologiaRepository $tr, InmuebleRepository $ir, Request $request): Response
+    public function listado_comercial_todos($page = 1, ComercializacionRepository $com, TipologiaRepository $tr, InmuebleRepository $ir, Request $request): Response
     {
         $comercializaciones = $com->findAll();
         $tipologias = $tr->findAll();
-        //filtrar por
-        $uso= $request->query->get('uso');
-        $tipologia=$request->query->get('tipologia');
-        $status1=$request->query->get('status1');
+
+        //inicializar variables
+        $uso = null;
+        $tipologia = null;
+        //$status1 siempre a null para que saque todos los inmuebles con comercializacion (disponibles, no-disponibles, alquilados, vendidos)
+        $status1= null;
+        $fcomercializacion = null;
+        $fcampo_busqueda=null;
+
+        //filtrar por (enviadas por GET)
+        if($request->query->get('uso') != null)
+            $uso= $request->query->get('uso');
+        if($request->query->get('tipologia') != null)
+            $tipologia=$request->query->get('tipologia');
+
+        if($request->query->get('ftipologia') != null)
+            $tipologia=$request->query->get('ftipologia');
+        if($request->query->get('fcomercializacion') != null)
+            $fcomercializacion = $request->query->get('fcomercializacion');
+        if($request->query->get('fcampo_busqueda') != null)
+            $fcampo_busqueda = $request->query->get('fcampo_busqueda');
+
+        //filtrar por (enviadas por POST)
+        if($request->request->get('ftipologia') != null)
+            $tipologia=$request->request->get('ftipologia');
+        if($request->request->get('fcomercializacion') != null)
+            $fcomercializacion = $request->request->get('fcomercializacion');
+        if($request->request->get('fcampo_busqueda') !=null)
+            $fcampo_busqueda = $request->request->get('fcampo_busqueda');
+
         //sacar el total de inmuebles aplicando el filtro, devuelve un entero
-        $totalinmuebles = $ir->findBy_CUSTOM($uso, $tipologia, $status1);
+        $totalinmuebles = $ir->findBy_CUSTOM($uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda);
         $numTotalPaginas=0;
         if($totalinmuebles % 10 == 0)
             $numTotalPaginas = intdiv($totalinmuebles,10);
@@ -42,7 +68,7 @@ class InmuebleController extends AbstractController
 
         
         //resultado paginado
-        $inmuebles = $ir->findBy_CUSTOM_Paginado($page,$uso,$tipologia,$status1);
+        $inmuebles = $ir->findBy_CUSTOM_Paginado($page, $uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda);
         //dump($request);
 
         return $this->render('inmueble/index.html.twig', [
@@ -53,12 +79,78 @@ class InmuebleController extends AbstractController
             'page' => $page,
             'uso' => $uso,
             'tipologia' => $tipologia,
-            'status1' => $status1,
+            'fcomercializacion' => $fcomercializacion,
+            'fcampo_busqueda' => $fcampo_busqueda,
             'numTotalPaginas' => $numTotalPaginas,
             'totalinmuebles' => $totalinmuebles
         ]);
     }
+    
+    //listado de inmuebles para los roles ROLE_COMPRADOR
+    /**
+     * @Route("/index/comercializacion/disponibles/{page}", name="inmueble_index_comercializacion_disponibles", requirements={"page"="\d+"}, methods={"GET","POST"})
+     */
+    public function listado_comercial_disponibles($page = 1, ComercializacionRepository $com, TipologiaRepository $tr, InmuebleRepository $ir, Request $request): Response
+    {
+        $comercializaciones = $com->findAll();
+        $tipologias = $tr->findAll();
 
+        //inicializar variables
+        $uso = null;
+        $tipologia = null;
+        //status1 siempre valdrá 1, solo se listarán inmuebles de comercializacion (disponibles).
+        $status1= 1;
+        $fcomercializacion = null;
+        $fcampo_busqueda=null;
+
+        //filtrar por (enviadas por GET)
+        if($request->query->get('uso') != null)
+            $uso= $request->query->get('uso');
+        if($request->query->get('tipologia') != null)
+            $tipologia=$request->query->get('tipologia');
+
+        if($request->query->get('ftipologia') != null)
+            $tipologia=$request->query->get('ftipologia');
+        if($request->query->get('fcomercializacion') != null)
+            $fcomercializacion = $request->query->get('fcomercializacion');
+        if($request->query->get('fcampo_busqueda') != null)
+            $fcampo_busqueda = $request->query->get('fcampo_busqueda');
+
+        //filtrar por (enviadas por POST)
+        if($request->request->get('ftipologia') != null)
+            $tipologia=$request->request->get('ftipologia');
+        if($request->request->get('fcomercializacion') != null)
+            $fcomercializacion = $request->request->get('fcomercializacion');
+        if($request->request->get('fcampo_busqueda') !=null)
+            $fcampo_busqueda = $request->request->get('fcampo_busqueda');
+
+        //sacar el total de inmuebles aplicando el filtro, devuelve un entero
+        $totalinmuebles = $ir->findBy_CUSTOM($uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda);
+        $numTotalPaginas=0;
+        if($totalinmuebles % 10 == 0)
+            $numTotalPaginas = intdiv($totalinmuebles,10);
+        else
+            $numTotalPaginas =intdiv($totalinmuebles,10) + 1;
+
+        
+        //resultado paginado
+        $inmuebles = $ir->findBy_CUSTOM_Paginado($page, $uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda);
+        //dump($request);
+
+        return $this->render('inmueble/index.html.twig', [
+            'controller_name' => 'InmuebleController',
+            'comercializaciones' => $comercializaciones,
+            'tipologias' =>$tipologias,
+            'inmuebles' => $inmuebles,
+            'page' => $page,
+            'uso' => $uso,
+            'tipologia' => $tipologia,
+            'fcomercializacion' => $fcomercializacion,
+            'fcampo_busqueda' => $fcampo_busqueda,
+            'numTotalPaginas' => $numTotalPaginas,
+            'totalinmuebles' => $totalinmuebles
+        ]);
+    }
     /**
      * @Route("/new/form_elegir_tipologia", name="form_elegir_tipologia")
      */

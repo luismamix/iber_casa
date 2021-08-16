@@ -23,25 +23,32 @@ class InmuebleRepository extends ServiceEntityRepository
     //  * @return Inmueble[] Returns an array of Inmueble objects
     //  */
     
-    public function findBy_CUSTOM_Paginado($page, $uso, $tipologia, $status1)
+    public function findBy_CUSTOM_Paginado($page, $uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda)
     {
         $em = $this->getEntityManager();
         $where="";
         $fields = array();
 
-        if ($uso != null) {
-            echo "uso : $uso ,";
-            $fields[] = " inm.uso = $uso ";
-        }
-        if ($tipologia != null) {
-            echo "tipologia : $tipologia, ";
-            $fields[] = " inm.tipologia = $tipologia ";
-        }
         if ($status1 != null) {
-            echo "status1 : $status1";
+            echo "status1 : $status1 / ";
             $fields[] = " inm.status1 = $status1 ";
         }
-
+        if ($uso != null) {
+            echo "uso : $uso / ";
+            $fields[] = " inm.uso = $uso ";
+        }
+        if ($tipologia != null) {   
+            echo "tipologia : $tipologia / ";
+            $fields[] = " inm.tipologia = $tipologia ";
+        }
+        if ($fcomercializacion != null) {
+            echo "fcomercializacion : $fcomercializacion / ";
+            $fields[] = " inm.comercializacion = $fcomercializacion ";
+        }
+        if ($fcampo_busqueda != null) {
+            echo "fcampo_busqueda : $fcampo_busqueda ";
+            $fields[] = " inm.localidad LIKE '%"."$fcampo_busqueda"."%' ";
+        }
         switch (count($fields)) {
             case 0:
                 $where="";
@@ -54,6 +61,9 @@ class InmuebleRepository extends ServiceEntityRepository
                 break;
             case 3:
                 $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] ";
+                break;
+            case 4:
+                $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] AND $fields[3]";
                 break;
             default:
                 # code... ACK ACK
@@ -79,7 +89,7 @@ class InmuebleRepository extends ServiceEntityRepository
         return $q->getResult();
     }
   
-    public function findBy_CUSTOM($uso, $tipologia, $status1)
+    public function findBy_CUSTOM($uso, $tipologia, $status1, $fcomercializacion, $fcampo_busqueda)
     {
         $em = $this->getEntityManager();
         $where="";
@@ -94,7 +104,13 @@ class InmuebleRepository extends ServiceEntityRepository
         if ($status1 != null) {
             $fields[] = " inm.status1 = $status1 ";
         }
-
+        if ($fcomercializacion != null) {
+            $fields[] = " inm.comercializacion = $fcomercializacion ";
+        }
+        if ($fcampo_busqueda != null) {
+            $fields[] = " inm.localidad LIKE '%"."$fcampo_busqueda"."%'";
+        }
+    
         switch (count($fields)) {
             case 0:
                 $where="";
@@ -108,6 +124,9 @@ class InmuebleRepository extends ServiceEntityRepository
             case 3:
                 $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] ";
                 break;
+            case 4:
+                $where=" WHERE $fields[0] AND $fields[1] AND $fields[2] AND $fields[3]";
+                    break;
             default:
                 # code... ACK ACK
                 break;

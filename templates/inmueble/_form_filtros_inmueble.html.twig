@@ -1,4 +1,4 @@
-<form method="POST" action="{{ path('inmueble_index') }}">
+<form method="POST" {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} action="{{ path('inmueble_index_comercializacion_todos') }}" {% elseif is_granted('ROLE_COMPRADOR') %} action="{{ path('inmueble_index_comercializacion_disponibles') }}" {% endif %}>
     <div class="row ">
         <div class="col-md-3 mt-1">
             <div class="form-group">

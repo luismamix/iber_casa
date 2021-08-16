@@ -23,17 +23,42 @@
                 <span class="ml-2 h4 text-primary"> Página {{page}} - numTotalPaginas {{numTotalPaginas}} - totalInmuebles {{totalinmuebles}}</span>
             </div>
              <div class="row mt-1">
-                {# paginacion #}
+                {# paginacion , dependiendo del rol te llevara a una ruta u otra, aunque se envien las mismas variables.#}
                 <div class="col border-top border-bottom border-primary pt-2 pb-2">
-                <a class ="" href="{{path('inmueble_index', {page: 1, uso: uso, tipologia: tipologia, status1: status1} )}}"> <span class="h5"><< </span> </a>
+                {# primera pagina #}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                    <a class ="" href="{{path('inmueble_index_comercializacion_todos', {page: 1, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"> <span class="h5"><< </span> </a>
+                {% elseif is_granted('ROLE_COMPRADOR') %}
+                    <a class ="" href="{{path('inmueble_index_comercializacion_disponibles', {page: 1, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"> <span class="h5"><< </span> </a>
+                {% endif %}
+                {# anterior #}
                 {% if page > 1 %}
-                  <a class ="ml-2" href="{{path('inmueble_index', {page: page-1 , uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page-1}}</span></a>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                        <a class ="ml-2" href="{{path('inmueble_index_comercializacion_todos', {page: page-1 , uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page-1}}</span></a>
+                    {% elseif is_granted('ROLE_COMPRADOR') %}
+                        <a class ="ml-2" href="{{path('inmueble_index_comercializacion_disponibles', {page: page-1 , uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page-1}}</span></a>
+                    {% endif %}
                 {% endif %}
-                 <a class ="ml-2" href="{{path('inmueble_index', {page: page, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page}}</span></a>
+                {# pagina actual #}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                    <a class ="ml-2" href="{{path('inmueble_index_comercializacion_todos', {page: page, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page}}</span></a>
+                {% elseif is_granted('ROLE_COMPRADOR') %}
+                    <a class ="ml-2" href="{{path('inmueble_index_comercializacion_disponibles', {page: page, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page}}</span></a>
+                {% endif %}
+                {# siguiente #}
                 {% if page < numTotalPaginas %}
-                 <a class ="ml-2" href="{{path('inmueble_index', {page: page+1, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5">{{page+1}}</span></a>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                        <a class ="ml-2" href="{{path('inmueble_index_comercializacion_todos', {page: page+1, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page+1}}</span></a>
+                    {% elseif is_granted('ROLE_COMPRADOR') %}
+                        <a class ="ml-2" href="{{path('inmueble_index_comercializacion_disponibles', {page: page+1, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5">{{page+1}}</span></a>
+                    {% endif %}
                 {% endif %}
-                  <a class ="ml-2" href="{{path('inmueble_index', {page: numTotalPaginas, uso: uso, tipologia: tipologia, status1: status1} )}}"><span class="h5"> >></span> </a>               
+                {# ultima pagina #}
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                    <a class ="ml-2" href="{{path('inmueble_index_comercializacion_todos', {page: numTotalPaginas, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5"> >></span> </a>               
+                {% elseif is_granted('ROLE_COMPRADOR') %}  
+                    <a class ="ml-2" href="{{path('inmueble_index_comercializacion_disponibles', {page: numTotalPaginas, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5"> >></span> </a>               
+                {% endif %}  
                 </div>
             </div>
             
