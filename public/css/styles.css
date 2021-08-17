@@ -32,3 +32,18 @@ input,label,button,p{
 .bg-marine > span{
     color:#01FEFE !important
 }
+
+.btn-outline-marine{
+    color:#061FB2 !important;
+    border: solid 1px #061FB2 !important;
+}
+
+.btn-white{
+    background: white !important;
+    color:#061FB2 !important;
+}
+
+.btn-marine{
+    background: #061FB2 !important;
+    color:white !important;
+}

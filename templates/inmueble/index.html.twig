@@ -60,6 +60,11 @@
                     <a class ="ml-2" href="{{path('inmueble_index_comercializacion_disponibles', {page: numTotalPaginas, uso: uso, tipologia: tipologia, fcomercializacion : fcomercializacion, fcampo_busqueda : fcampo_busqueda} )}}"><span class="h5"> >></span> </a>               
                 {% endif %}  
                 </div>
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                <div class="col border-top border-bottom border-primary pt-2 pb-2">
+                    <a class="btn btn-outline-primary" role="button" href="{{ path('form_elegir_tipologia') }}">Crear</a>
+                </div>
+                 {% endif %}  
             </div>
             
             <div class="row mt-3">
@@ -74,6 +79,12 @@
                                 <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
                                 <h2 class="text-white ">{{inmueble.precio}} €</h2>
                                 <p class="text-marine">{{inmueble.descripcion}}</p>
+                                <p><a class="btn btn-outline-marine" role="button" href="{{ path('mostrar_inmueble', {'id': inmueble.id}) }}">Ver detalles</a>
+                                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
+                                 <a class="ml-2 btn btn-secondary" role="button" href="{{ path('form_modificar_inmueble', {'id': inmueble.id}) }}">Modificar</a>
+                                  <a class="ml-2 btn btn-danger" role="button" href="#">Eliminar</a>
+                                 {% endif %}
+                                 </p>
                                 <div class="bg-marine rounded">
                                     {# customizar la info + iconos para cada tipologia #}
                                     {% if inmueble.tipologia.id == 1 %}

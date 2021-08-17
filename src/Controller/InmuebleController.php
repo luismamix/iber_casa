@@ -151,6 +151,19 @@ class InmuebleController extends AbstractController
             'totalinmuebles' => $totalinmuebles
         ]);
     }
+
+    /**
+     * @Route("/show/{id}", name="mostrar_inmueble", requirements={"id"="\d+"})
+     */
+    public function mostrar_inmueble($id, InmuebleRepository $ir): Response
+    {
+        $inmueble = $ir->find($id);
+        return $this->render('inmueble/ver_detalles_inmueble.html.twig', [
+            'controller_name' => 'InmuebleController',
+            'inmueble' => $inmueble
+        ]);
+    }
+
     /**
      * @Route("/new/form_elegir_tipologia", name="form_elegir_tipologia")
      */
@@ -348,9 +361,13 @@ class InmuebleController extends AbstractController
         $this->addFlash('success', 'Inmueble creado.');
 
         //redireccionar
-        return $this->render('public/index.html.twig', [
+        /* return $this->render('public/index.html.twig', [
                 'controller_name' => 'InmuebleController',
-            ]);
+            ]); */
+
+        return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
+            'controller_name' => 'InmuebleController',
+        ]);
     }
 
     /**
@@ -540,7 +557,11 @@ class InmuebleController extends AbstractController
         //mensaje de si s ha modificado.
         $this->addFlash('success', 'Inmueble modificado.');
     
-        return $this->render('public/index.html.twig', [
+       /*  return $this->render('public/index.html.twig', [
+            'controller_name' => 'InmuebleController',
+        ]); */
+
+        return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
             'controller_name' => 'InmuebleController',
         ]);
     }
