@@ -2,6 +2,14 @@ h1,h2,li{
     font-family: 'Orelega One', 'Roboto', cursive;
 }
 
+.marginleft-5{
+    margin-left: 5px;
+}
+
+.marginright-5{
+    margin-right: 5px;
+}
+
 input,label,button,p{
     font-family:Arial, Helvetica, sans-serif;
  }

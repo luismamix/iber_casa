@@ -3,7 +3,7 @@
 {% block title %}Detalles del inmueble{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row marginleft-5 marginright-5">
         <div class="col">
             <div class="row mt-5">
                 <div class="col ">
@@ -13,7 +13,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col">
-                    <div class="row mt-5">
+                    <div class="row">
                         <div class="col-md-4">
                              {% set images = inmueble.rutaimagen | split(';') %}
                              {% set i = 0 %}
@@ -50,19 +50,88 @@
                                 <p class="text-marine">{{inmueble.descripcion}}</p>
                                 <p>
                                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
-                                 <a class="ml-2 btn btn-secondary" role="button" href="{{ path('form_modificar_inmueble', {'id': inmueble.id}) }}">Modificar</a>
-                                 <a class="ml-2 btn btn-danger" role="button" href="#">Eliminar</a>
+                                 <a class="ml-2 btn btn-secondary btn-lg" role="button" href="{{ path('form_modificar_inmueble', {'id': inmueble.id}) }}">Modificar</a>
+                                 <a class="ml-2 btn btn-danger btn-lg" role="button" href="#">Eliminar</a>
                                  {% endif %}
                                  {% if is_granted('ROLE_COMPRADOR') %}
                                     {% if inmueble.comercializacion.id == 1 %}
-                                        <a class="ml-2 btn btn-white" role="button" href="#">Alquilar</a>
+                                        <a class="ml-2 btn btn-white btn-lg" role="button" href="#">Alquilar</a>
                                     {% elseif inmueble.comercializacion.id == 2 %}
-                                        <a class="ml-2 btn btn-marine" role="button" href="#">Comprar</a>
+                                        <a class="ml-2 btn btn-marine btn-lg" role="button" href="#">Comprar</a>
                                     {% endif %}
                                  {% endif %}
                                  </p>
                         </div>
                     </div>
+                </div>
+            </div>
+             <div class="row mt-3">
+                <div class="col ">
+                    <h1>Características</h1>
+                </div>
+            </div>
+            <div class="row mt-1 bg-light rounded">
+                {# comun a todos - col izq #}
+                <div class="col">
+                    <ul  class="mt-3">
+                        {{ include('inmueble/bloque_detalles_inmueble.html.twig') }}        
+                    </ul>
+                </div>
+                {# comun a viviendas - col centro - visible solo para viviendas #}
+                {% if inmueble.tipologia.id == 5 or inmueble.tipologia.id == 6 or inmueble.tipologia.id == 7 %}
+                <div class="col">
+                     <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_vivienda.html.twig') }}        
+                    </ul>
+                </div>
+                {% endif %}
+                 {# especifico de cada tipologia - col der #}
+                <div class="col">
+                {% if inmueble.tipologia.id == 1 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_edificio.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 2 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_local.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 3 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_nave.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 4 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_oficina.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 5 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_piso.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 6 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_adosado.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 7 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_chalet.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 8 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_suelo_urbano.html.twig') }}        
+                    </ul>
+                {% endif %}
+                {% if inmueble.tipologia.id == 9 %}
+                    <ul class="mt-3">
+                        {{ include('inmueble/bloque_detalles_suelo_rustico.html.twig') }}        
+                    </ul>
+                {% endif %}
                 </div>
             </div>
         </div>
