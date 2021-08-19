@@ -15,6 +15,7 @@
                 <div class="col">
                     <div class="row">
                         <div class="col-md-4">
+                        {% if inmueble.rutaimagen is not empty %}
                              {% set images = inmueble.rutaimagen | split(';') %}
                              {% set i = 0 %}
                              <div id="galeriaFotos" class="carousel slide" data-ride="carousel">
@@ -43,6 +44,9 @@
                                     <span class="sr-only">Siguiente</span>
                                 </a>
                              </div>
+                        {% else %}
+                            <img src="{{asset('images/img_not_found.png')}} " alt="img not found" srcset="" class="img-fluid rounded">
+                        {% endif %}
                         </div>
                         <div class="col-md-8 bg-acqua rounded">
                             <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
@@ -51,7 +55,7 @@
                                 <p>
                                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
                                  <a class="ml-2 btn btn-secondary btn-lg" role="button" href="{{ path('form_modificar_inmueble', {'id': inmueble.id}) }}">Modificar</a>
-                                 <a class="ml-2 btn btn-danger btn-lg" role="button" href="#">Eliminar</a>
+                                 <a class="ml-2 btn btn-danger btn-lg" role="button" href="{{ path('eliminar_inmueble', {'id': inmueble.id}) }}">Eliminar</a>
                                  {% endif %}
                                  {% if is_granted('ROLE_COMPRADOR') %}
                                     {% if inmueble.comercializacion.id == 1 %}

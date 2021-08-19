@@ -413,4 +413,11 @@ class InmuebleManager
     
         return $inmueble;
     }
+
+   /*  public function borrarInmueble(Inmueble $in){
+        
+        $this->em->remove($in);
+        $this->em->flush();
+
+    } */
 }

@@ -37,22 +37,32 @@
       
         
         {% for label, mensajes in app.flashes %}
-            <div class="modal" id="modal-flashes" tabindex="-1" role="dialog">
+            <div class="modal fade" id="modal-flashes" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{label}}</h5>
-                        <button type="button" class="close" data-dismiss="modal-flashes" aria-label="Close">
+                    {# dar formato a los mensajes #}
+                    {% set palabras = label | split(" ") %}
+                    {% if  palabras | first == "error" %}
+                        <h4 class="modal-title"><span class="text-danger">{{label}}</span></h4>
+                    {% elseif palabras | first == "success" %}
+                        <h4 class="modal-title"><span class="text-success">{{label}}</span></h4>
+                    {% endif %}
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         {% for mensaje in mensajes %}
-                        <p>{{ mensaje }}</p>
+                            {% if  palabras | first == "error" %}
+                                <p><span class="text-danger">{{ mensaje }}</span></p>
+                            {% elseif palabras | first == "success" %}
+                                <p><span class="text-success">{{ mensaje }}</span></p>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal-flashes">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                     </div>
                 </div>
@@ -69,10 +79,15 @@
         <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
         <script>
-        var myModal = new bootstrap.Modal(document.getElementById('modal-flashes'), {
+        {# con js #}
+        {# var myModal = new bootstrap.Modal(document.getElementById('modal-flashes'), {
             keyboard: false
         })
-        // myModal.show();
+        myModal.show(); #}
+
+        {# lo mismo cn jquery #}
+         $('#modal-flashes').modal({keyboard : true});
+         $('#modal-flashes').modal('show');
         </script>
 
         {% block javascripts_footer %}

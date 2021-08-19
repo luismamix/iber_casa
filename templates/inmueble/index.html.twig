@@ -72,8 +72,12 @@
                    {% for inmueble in inmuebles%}
                     <div class="row mt-5" >
                         <div class="col-md-3">
-                                {% set images = inmueble.rutaimagen | split(';') %}
-                                <img src="{{asset(images | first)}}" alt="img principal" srcset="" class="img-fluid rounded">
+                                {% if inmueble.rutaimagen is not empty %}
+                                    {% set images = inmueble.rutaimagen | split(';') %}
+                                    <img src="{{asset(images | first)}}" alt="img principal" srcset="" class="img-fluid rounded">
+                                {% else %}
+                                    <img src="{{asset('images/img_not_found.png')}} " alt="img not found" srcset="" class="img-fluid rounded">
+                                {% endif %}
                         </div>
                         <div class="col-md-9 bg-acqua rounded">
                                 <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
@@ -82,7 +86,7 @@
                                 <p><a class="btn btn-outline-marine" role="button" href="{{ path('mostrar_inmueble', {'id': inmueble.id}) }}">Ver detalles</a>
                                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
                                  <a class="ml-2 btn btn-secondary" role="button" href="{{ path('form_modificar_inmueble', {'id': inmueble.id}) }}">Modificar</a>
-                                  <a class="ml-2 btn btn-danger" role="button" href="#">Eliminar</a>
+                                  <a class="ml-2 btn btn-danger" role="button" href="{{ path('eliminar_inmueble', {'id': inmueble.id}) }}">Eliminar</a>
                                  {% endif %}
                                  </p>
                                 <div class="bg-marine rounded">

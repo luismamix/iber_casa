@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @Route("/inmueble")
@@ -361,10 +362,6 @@ class InmuebleController extends AbstractController
         $this->addFlash('success', 'Inmueble creado.');
 
         //redireccionar
-        /* return $this->render('public/index.html.twig', [
-                'controller_name' => 'InmuebleController',
-            ]); */
-
         return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
             'controller_name' => 'InmuebleController',
         ]);
@@ -384,7 +381,14 @@ class InmuebleController extends AbstractController
         ComercializacionRepository $com,
         UsoRepository $ur
     ): Response {
+        
         $inmueble  = $im->find($id);
+        if($inmueble == null){
+            $this->addFlash('error al modificar el inmueble', "El inmueble no existe.");
+            return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
+            'controller_name' => 'InmuebleController',
+            ]);
+        }
         $tipologias = $tr->findAll();
         $carteras = $cr->findAll();
         $propietarios = $pr->findAll();
@@ -549,17 +553,43 @@ class InmuebleController extends AbstractController
             //$ex->getCode();
             //$ex->getTraceAsString();
             $this->addFlash('error al modificar el inmueble', $ex->getMessage());
-            return $this->render('public/index.html.twig', [
+            return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
                 'controller_name' => 'InmuebleController',
             ]);
         }
         
         //mensaje de si s ha modificado.
         $this->addFlash('success', 'Inmueble modificado.');
-    
-       /*  return $this->render('public/index.html.twig', [
+
+        return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
             'controller_name' => 'InmuebleController',
-        ]); */
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="eliminar_inmueble", requirements={"id"="\d+"})
+     */
+    public function eliminar_inmueble($id, InmuebleRepository $ir, EntityManagerInterface $em): Response
+    {
+        $inmueble = $ir->find($id);
+       
+        try {
+           $em->remove($inmueble);
+           $em->flush(); 
+            //pq no captura la excepcion lanzada dsd el servicio?
+            //$im->borrarInmueble($inmueble);
+        } catch (\Exception $ex) {
+            //$ex->getMessage();
+            //$ex->getCode();
+            //$ex->getTraceAsString();
+            $this->addFlash('error al borrar el inmueble', $ex->getMessage());
+            return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
+                'controller_name' => 'InmuebleController',
+            ]);
+        }
+
+        //mensaje de si s ha borrado.
+        $this->addFlash('success', 'Inmueble borrado.');
 
         return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
             'controller_name' => 'InmuebleController',
