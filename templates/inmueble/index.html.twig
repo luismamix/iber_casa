@@ -80,8 +80,12 @@
                                 {% endif %}
                         </div>
                         <div class="col-md-9 bg-acqua rounded">
-                                <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
-                                <h2 class="text-white ">{{inmueble.precio}} €</h2>
+                                <h1 class="text-marine">
+                                  <span class="text-white">Id {{inmueble.id}} - </span>
+                                  {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}} 
+                                  <span class="text-white">{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} - {{inmueble.status1.descripcion | capitalize}} {% endif %}</span>
+                                </h1>
+                                <h2 class="text-marine">{{inmueble.precio | number_format(0,',','.')}} €</h2>
                                 <p class="text-marine">{{inmueble.descripcion}}</p>
                                 <p><a class="btn btn-outline-marine" role="button" href="{{ path('mostrar_inmueble', {'id': inmueble.id}) }}">Ver detalles</a>
                                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}

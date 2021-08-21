@@ -49,8 +49,12 @@
                         {% endif %}
                         </div>
                         <div class="col-md-8 bg-acqua rounded">
-                            <h1 class="text-white">Id {{inmueble.id}} - {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}}</h1>
-                                <h2 class="text-white ">{{inmueble.precio}} €</h2>
+                                <h1 class="text-marine">
+                                  <span class="text-white">Id {{inmueble.id}} - </span>
+                                  {{inmueble.tipologia.descripcion | capitalize}} en {{inmueble.comercializacion.descripcion | capitalize}}, {{inmueble.localidad | title}} 
+                                  <span class="text-white">{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} - {{inmueble.status1.descripcion | capitalize}} {% endif %}</span>
+                                </h1>
+                                <h2 class="text-marine">{{inmueble.precio | number_format(0,',','.')}} €</h2>
                                 <p class="text-marine">{{inmueble.descripcion}}</p>
                                 <p>
                                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %}
@@ -59,9 +63,9 @@
                                  {% endif %}
                                  {% if is_granted('ROLE_COMPRADOR') %}
                                     {% if inmueble.comercializacion.id == 1 %}
-                                        <a class="ml-2 btn btn-white btn-lg" role="button" href="#">Alquilar</a>
+                                        <a class="ml-2 btn btn-white btn-lg" role="button" href="{{ path('form_alquiler', {'id': inmueble.id})  }}">Alquilar</a>
                                     {% elseif inmueble.comercializacion.id == 2 %}
-                                        <a class="ml-2 btn btn-marine btn-lg" role="button" href="#">Comprar</a>
+                                        <a class="ml-2 btn btn-marine btn-lg" role="button" href="{{ path('form_venta', {'id': inmueble.id})  }}">Comprar</a>
                                     {% endif %}
                                  {% endif %}
                                  </p>

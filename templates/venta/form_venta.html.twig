@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}  Formulario Comprar inmueble {% endblock %}
+
+{% block javascripts %}
+      <script src="{{ asset('js/tramites.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="row mt-5">
+                <div class="col-md-8">
+                    <h1><span><i style="font-size:38px;" class="fas fa-handshake text-dark mr-1"></i></span>
+                    {{inmueble.comercializacion.descripcion | capitalize}}, Id: {{inmueble.id}} </h1>
+                </div>
+            </div>
+            <div class="row mt-2 d-flex justify-content-center">
+                <div class="col-md-6">
+                    <form action="{{path('venta_realizar')}}" method="post">
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" id="" for="idusr">Id Usr</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" name="idusr" value={{user.id}} placeholder="Id Usr" readonly required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" id="" for="idinmueble">Id Inmueble</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" name="idinmueble" value={{inmueble.id}} placeholder="Id Inmueble" readonly required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="fecha_venta" >Fecha Venta</label>
+                            <div class="col-md-6">
+                            <input type="datetime-local" class="form-control form-control-md" id="fecha_venta" name="fecha_venta" required>
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" for="precio">Precio</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" id="precio" name="precio" value={{inmueble.precio}} disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" for="reserva">Reserva</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" id="reserva" name="reserva" placeholder="Reserva" min="1" step="0.01" required>
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" for="iva">IVA</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" id="iva" name="iva" value=21 min="1" readonly required>
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                            <label class="col-sm-3 col-form-label" for="total">Total</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-md" id="total" name="total" placeholder="Total" min="1" step="0.01" readonly required>
+                            </div>
+                        </div>
+                        <div class="row mt-4 ">
+                            <div class="col d-flex justify-content-center">
+                                <button type="submit" class="btn btn-marine btn-lg"> Realizar </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

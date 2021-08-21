@@ -54,6 +54,12 @@ security:
          - { path: ^/inmueble/new/form_nuevo_inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/inmueble/new/nuevo_inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/alquiler/index, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/alquiler/form_alquiler, roles: [ROLE_COMPRADOR] }
+         - { path: ^/alquiler/iniciar, roles: [ROLE_COMPRADOR] }
+         - { path: ^/venta/index, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/venta/form_venta, roles: [ROLE_COMPRADOR] }
+         - { path: ^/venta/realizar, roles: [ROLE_COMPRADOR] }
          - { path: ^/tipo/usuario, roles: ROLE_ADMIN }
          - { path: ^/, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
