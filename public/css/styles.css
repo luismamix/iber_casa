@@ -55,3 +55,14 @@ input,label,button,p{
     background: #061FB2 !important;
     color:white !important;
 }
+.page-404-notfound{
+    background: url("/img/errorpages/404.jpg") no-repeat fixed center;
+ /*   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover; */
+   background-size: cover;
+   height: 200px;
+   width: 300px ;
+   text-align: center;
+ 
+}

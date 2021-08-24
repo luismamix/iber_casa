@@ -87,7 +87,7 @@ class InmuebleController extends AbstractController
         ]);
     }
     
-    //listado de inmuebles para los roles ROLE_COMPRADOR
+    //listado de inmuebles para los usr con rol ROLE_COMPRADOR
     /**
      * @Route("/index/comercializacion/disponibles/{page}", name="inmueble_index_comercializacion_disponibles", requirements={"page"="\d+"}, methods={"GET","POST"})
      */
@@ -159,6 +159,11 @@ class InmuebleController extends AbstractController
     public function mostrar_inmueble($id, InmuebleRepository $ir): Response
     {
         $inmueble = $ir->find($id);
+        //comprobar si existe el inmueble
+        if(!$inmueble){
+            throw $this->createNotFoundException('Este Inmueble no existe'); 
+        }
+
         return $this->render('inmueble/ver_detalles_inmueble.html.twig', [
             'controller_name' => 'InmuebleController',
             'inmueble' => $inmueble
@@ -349,9 +354,9 @@ class InmuebleController extends AbstractController
             $inmueble =$im->crearInmueble($datosform, $rutaProyecto);
             $inmueble->getId();
         } catch (\Exception $ex) {
-            //$ex->getMessage();
-            //$ex->getCode();
-            //$ex->getTraceAsString();
+           /*  $ex->getMessage();
+            $ex->getCode();
+            $ex->getTraceAsString(); */
             $this->addFlash('error al crear inmueble', $ex->getMessage());
             return $this->render('public/index.html.twig', [
                 'controller_name' => 'InmuebleController',
@@ -383,12 +388,12 @@ class InmuebleController extends AbstractController
     ): Response {
         
         $inmueble  = $im->find($id);
-        if($inmueble == null){
-            $this->addFlash('error al modificar el inmueble', "El inmueble no existe.");
-            return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
-            'controller_name' => 'InmuebleController',
-            ]);
+        
+        //comprobar si existe el inmueble
+        if(!$inmueble){
+            throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
+        
         $tipologias = $tr->findAll();
         $carteras = $cr->findAll();
         $propietarios = $pr->findAll();
@@ -569,15 +574,17 @@ class InmuebleController extends AbstractController
     /**
      * @Route("/delete/{id}", name="eliminar_inmueble", requirements={"id"="\d+"})
      */
-    public function eliminar_inmueble($id, InmuebleRepository $ir, EntityManagerInterface $em): Response
+    public function eliminar_inmueble($id, InmuebleRepository $ir, InmuebleManager $im): Response
     {
         $inmueble = $ir->find($id);
-       
+
+        //comprobar si existe el inmueble
+        if(!$inmueble){
+            throw $this->createNotFoundException('Este Inmueble no existe'); 
+        }
+
         try {
-           $em->remove($inmueble);
-           $em->flush(); 
-            //pq no captura la excepcion lanzada dsd el servicio?
-            //$im->borrarInmueble($inmueble);
+            $im->borrarInmueble($inmueble);
         } catch (\Exception $ex) {
             //$ex->getMessage();
             //$ex->getCode();

@@ -24,6 +24,7 @@ class InmuebleManager
     private $st2;
     private $uso;
     private $com;
+    
     public function __construct(
         InmuebleRepository $im,
         EntityManagerInterface $em,
@@ -414,10 +415,10 @@ class InmuebleManager
         return $inmueble;
     }
 
-   /*  public function borrarInmueble(Inmueble $in){
+   public function borrarInmueble(Inmueble $in){
         
         $this->em->remove($in);
         $this->em->flush();
 
-    } */
+    }
 }
