@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Alquiler;
+use App\Repository\AlquilerRepository;
 use App\Repository\InmuebleRepository;
 use App\Repository\Status1Repository;
 use App\Repository\UsuarioRepository;
@@ -21,10 +22,12 @@ class AlquilerController extends AbstractController
     /**
      * @Route("/index", name="alquiler_index")
      */
-    public function index(): Response
-    {
+    public function index(AlquilerRepository $ar): Response
+    {   
+        $alquileres = $ar->findAll();
         return $this->render('alquiler/index.html.twig', [
             'controller_name' => 'AlquilerController',
+            'alquileres' => $alquileres
         ]);
     }
 

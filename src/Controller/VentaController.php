@@ -11,6 +11,7 @@ use App\Repository\UsuarioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Venta;
+use App\Repository\VentaRepository;
 
 /**
  * @Route("/venta")
@@ -20,10 +21,12 @@ class VentaController extends AbstractController
     /**
      * @Route("/index", name="venta_index")
      */
-    public function index(): Response
-    {
+    public function index(VentaRepository $vr): Response
+    {   
+        $ventas = $vr->findAll();
         return $this->render('venta/index.html.twig', [
             'controller_name' => 'VentaController',
+            'ventas' => $ventas
         ]);
     }
 

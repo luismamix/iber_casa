@@ -1,20 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AlquilerController!{% endblock %}
+{% block title %}Listado de Alquileres{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="row mt-2">
+    <div class="col ">
+        <h1>Listado de Alquileres
+    <span><i style="font-size:38px;" class="fas fa-clipboard text-dark ml-1"></i></span></h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ">
+        
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col"> <span class="text-primary" >   Id Alquiler </span></th>
+            <th scope="col"> <span class="text-primary" >   Usuario </span></th>
+            <th scope="col"> <span class="text-primary" >   Id Inmueble </span></th>
+            <th scope="col"> <span class="text-primary" >   Importe </span></th>
+            <th scope="col"> <span class="text-primary" >   Fecha Inicio    </span></th>
+            <th scope="col"> <span class="text-primary" >   Fecha Fin   </span></th>
+            <th scope="col"> <span class="text-primary" >   Fianza  </span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for alquiler in alquileres %}
+            <tr>
+            <th scope="row">{{alquiler.id}}</th>
+            <td>{{alquiler.usuario.nombre}} {{alquiler.usuario.apellido}}</td>
+            <td>{{alquiler.inmueble.id}}</td>
+            <td>{{alquiler.importe | number_format(0,',','.')}} <span class="text-primary" >€</span></td>
+            {# formato 24-08-21 17:16:18  #}
+            <td>{{alquiler.fechainicio | date("j-m-y H:i:s") }}</td>
+            <td>{{alquiler.fechafin | date("j-m-y H:i:s") }}</td>
+            <td>{{alquiler.fianza | number_format(0,',','.')}} <span class="text-primary" >€</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/src/Controller/AlquilerController.php'|file_link(0) }}">src/Controller/AlquilerController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/templates/alquiler/index.html.twig'|file_link(0) }}">templates/alquiler/index.html.twig</a></code></li>
-    </ul>
+    </div>
+    <div class="col-md-2"></div>
 </div>
 {% endblock %}

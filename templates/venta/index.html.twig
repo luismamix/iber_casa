@@ -1,20 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello VentaController!{% endblock %}
+{% block title %}Listado de Ventas{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="row mt-2">
+    <div class="col ">
+        <h1>Listado de Ventas
+    <span><i style="font-size:38px;" class="far fa-clipboard text-dark ml-1"></i></span></h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-2"></div>
+    <div class="col-md-8 ">
+        
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col"> <span class="text-purple">   Id Venta </span></th>
+            <th scope="col"> <span class="text-purple" >   Usuario </span></th>
+            <th scope="col"> <span class="text-purple" >   Id Inmueble </span></th>
+            <th scope="col"> <span class="text-purple" >   Fecha Venta </span></th>
+            <th scope="col"> <span class="text-purple" >   Reserva    </span></th>
+            <th scope="col"> <span class="text-purple" >   IVA   </span></th>
+            <th scope="col"> <span class="text-purple" >   Total  </span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+            <tr>
+            <th scope="row">{{venta.id}}</th>
+            <td>{{venta.usuario.nombre}} {{venta.usuario.apellido}}</td>
+            <td>{{venta.inmueble.id}}</td>
+            {# formato 24-08-21 17:16:18  #}
+            <td>{{venta.fechaventa | date("j-m-y H:i:s") }}</td>
+            <td>{{venta.reserva | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
+            <td>{{venta.iva | number_format(0,',','.')}} </td>
+            <td>{{venta.total | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/src/Controller/VentaController.php'|file_link(0) }}">src/Controller/VentaController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/composer/proyectos-simfony/iber_casa/templates/venta/index.html.twig'|file_link(0) }}">templates/venta/index.html.twig</a></code></li>
-    </ul>
+    </div>
+    <div class="col-md-2"></div>
 </div>
 {% endblock %}

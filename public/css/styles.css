@@ -37,6 +37,10 @@ input,label,button,p{
     color:#061FB2 !important;
 }
 
+.text-purple{
+    color: rgb(162, 2, 255) !important;
+}
+
 .bg-marine > span{
     color:#01FEFE !important
 }
@@ -54,15 +58,4 @@ input,label,button,p{
 .btn-marine{
     background: #061FB2 !important;
     color:white !important;
-}
-.page-404-notfound{
-    background: url("/img/errorpages/404.jpg") no-repeat fixed center;
- /*   -webkit-background-size: cover;
-   -moz-background-size: cover;
-   -o-background-size: cover; */
-   background-size: cover;
-   height: 200px;
-   width: 300px ;
-   text-align: center;
- 
 }
