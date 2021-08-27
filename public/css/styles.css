@@ -59,3 +59,6 @@ input,label,button,p{
     background: #061FB2 !important;
     color:white !important;
 }
+.border-4{
+    border-width: 4px !important;
+}
