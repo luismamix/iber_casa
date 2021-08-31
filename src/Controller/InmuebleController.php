@@ -164,6 +164,9 @@ class InmuebleController extends AbstractController
             throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
 
+        //checkear el acceso a la ruta mostrar_inmueble
+        $this->denyAccessUnlessGranted("show",$inmueble);
+
         return $this->render('inmueble/ver_detalles_inmueble.html.twig', [
             'controller_name' => 'InmuebleController',
             'inmueble' => $inmueble
@@ -228,6 +231,7 @@ class InmuebleController extends AbstractController
         //recuperar datos del formulario :O
         $datosform =[];
         $rutaProyecto="";
+        $user = $this->getUser();
         //dump($request);
 
         if ($request->request->get('tipologia') != null) {
@@ -351,7 +355,7 @@ class InmuebleController extends AbstractController
         
         //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.
         try {
-            $inmueble =$im->crearInmueble($datosform, $rutaProyecto);
+            $inmueble =$im->crearInmueble($datosform, $rutaProyecto, $user);
             $inmueble->getId();
         } catch (\Exception $ex) {
            /*  $ex->getMessage();
@@ -394,6 +398,9 @@ class InmuebleController extends AbstractController
             throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
         
+        //checkear el acceso a la ruta form_modificar_inmueble
+        $this->denyAccessUnlessGranted("edit",$inmueble);
+
         $tipologias = $tr->findAll();
         $carteras = $cr->findAll();
         $propietarios = $pr->findAll();
@@ -582,6 +589,9 @@ class InmuebleController extends AbstractController
         if(!$inmueble){
             throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
+
+        //checkear el acceso a la ruta eliminar_inmueble
+        $this->denyAccessUnlessGranted("delete",$inmueble);
 
         try {
             $im->borrarInmueble($inmueble);

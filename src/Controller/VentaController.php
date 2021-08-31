@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Venta;
 use App\Repository\VentaRepository;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/venta")
@@ -21,9 +22,29 @@ class VentaController extends AbstractController
     /**
      * @Route("/index", name="venta_index")
      */
-    public function index(VentaRepository $vr): Response
+    public function index(VentaRepository $vr, Security $security): Response
     {   
         $ventas = $vr->findAll();
+
+        $todas_las_ventas = $vr->findAll();
+        $ventas= array();
+
+        //ROLE_ADMIN puede ver todas las ventas.
+        if($security->isGranted('ROLE_ADMIN')){
+            $ventas = $todas_las_ventas;
+        }
+
+        //ROLE_VENDEDOR puede ver solo sus ventas (d los inmuebles q es propietario).
+        if($security->isGranted('ROLE_VENDEDOR')){
+            $misventas = array();
+            foreach($todas_las_ventas as $venta) {
+                if($this->getUser() === $venta->getInmueble()->getUsuario())
+                $misventas[] = $venta;
+            }
+            $ventas =  $misventas;
+        } 
+
+
         return $this->render('venta/index.html.twig', [
             'controller_name' => 'VentaController',
             'ventas' => $ventas
@@ -36,11 +57,10 @@ class VentaController extends AbstractController
     public function form_venta($id, InmuebleRepository $ir): Response
     {   
         $inmueble  = $ir->find($id);
-        if($inmueble == null){
-            $this->addFlash('error al comprar el inmueble', "El inmueble no existe.");
-            return $this->redirectToRoute('inmueble_index_comercializacion_disponibles', [
-            'controller_name' => 'VentaController',
-            ]);
+        
+        //comprobar si existe el inmueble
+        if(!$inmueble){
+            throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
 
         $user = $this->getUser();

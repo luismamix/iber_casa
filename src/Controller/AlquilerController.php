@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 
 /**
@@ -22,9 +23,27 @@ class AlquilerController extends AbstractController
     /**
      * @Route("/index", name="alquiler_index")
      */
-    public function index(AlquilerRepository $ar): Response
+    public function index(AlquilerRepository $ar, Security $security): Response
     {   
-        $alquileres = $ar->findAll();
+        $todos_los_alquileres = $ar->findAll();
+        $alquileres= array();
+
+        //ROLE_ADMIN puede ver todos los alquileres
+        if($security->isGranted('ROLE_ADMIN')){
+            $alquileres = $todos_los_alquileres;
+        }
+
+        //ROLE_VENDEDOR puede ver solo sus alquileres (d los inmuebles q es propietario).
+        if($security->isGranted('ROLE_VENDEDOR')){
+            $misalquileres = array();
+            foreach($todos_los_alquileres as $alquiler) {
+                if($this->getUser() === $alquiler->getInmueble()->getUsuario())
+                $misalquileres[] = $alquiler;
+            }
+            $alquileres = $misalquileres;
+        } 
+
+       
         return $this->render('alquiler/index.html.twig', [
             'controller_name' => 'AlquilerController',
             'alquileres' => $alquileres
@@ -37,12 +56,12 @@ class AlquilerController extends AbstractController
     public function form_alquiler($id, InmuebleRepository $ir): Response
     {
         $inmueble  = $ir->find($id);
-        if($inmueble == null){
-            $this->addFlash('error al alquilar el inmueble', "El inmueble no existe.");
-            return $this->redirectToRoute('inmueble_index_comercializacion_disponibles', [
-            'controller_name' => 'AlquilerController',
-            ]);
+
+        //comprobar si existe el inmueble
+        if(!$inmueble){
+            throw $this->createNotFoundException('Este Inmueble no existe'); 
         }
+       
         $user = $this->getUser();
 
         return $this->render('alquiler/form_alquiler.html.twig', [

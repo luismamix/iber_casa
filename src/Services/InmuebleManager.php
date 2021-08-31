@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Inmueble;
+use App\Entity\Usuario;
 use App\Repository\CarteraRepository;
 use App\Repository\ComercializacionRepository;
 use App\Repository\InmuebleRepository;
@@ -47,7 +48,7 @@ class InmuebleManager
         $this->com = $com;
     }
 
-    public function crearInmueble(array $datos, string $rutaProyecto)
+    public function crearInmueble(array $datos, string $rutaProyecto, Usuario $user)
     {
         $inmueble = new Inmueble();
     
@@ -191,7 +192,10 @@ class InmuebleManager
         if (isset($datos['terrazas'])) {
             $inmueble->setTerrazas($datos['terrazas']);
         }
-    
+
+        //usuario propietario del objeto
+        $inmueble->setUsuario($user);
+
         //persistir y flushear
         $this->em->persist($inmueble);
         $this->em->flush();
