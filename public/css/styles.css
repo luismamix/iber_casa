@@ -41,6 +41,10 @@ input,label,button,p{
     color: rgb(162, 2, 255) !important;
 }
 
+.text-purple2{
+    color: #3D3A98 !important;
+}
+
 .bg-marine > span{
     color:#01FEFE !important
 }
