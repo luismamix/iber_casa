@@ -64,7 +64,7 @@
                                  {% if is_granted('ROLE_COMPRADOR') %}
                                     {% if inmueble.comercializacion.id == 1 %}
                                         <a class="ml-2 btn btn-white btn-lg" role="button" href="{{ path('form_alquiler', {'id': inmueble.id})  }}">Alquilar</a>
-                                    {% elseif inmueble.comercializacion.id == 2 %}
+                                    {% elseif inmueble.comercializacion.id == 2 or inmueble.comercializacion.id == 3 %}
                                         <a class="ml-2 btn btn-marine btn-lg" role="button" href="{{ path('form_venta', {'id': inmueble.id})  }}">Comprar</a>
                                     {% endif %}
                                  {% endif %}
