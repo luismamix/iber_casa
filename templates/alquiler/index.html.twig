@@ -30,7 +30,7 @@
                 <tr>
                 <th scope="row">{{alquiler.id}}</th>
                 <td>{{alquiler.usuario.nombre}} {{alquiler.usuario.apellido}}</td>
-                <td>{{alquiler.inmueble.id}}</td>
+                <td><a class="text-primary font-italic" href="{{ path('mostrar_inmueble', {'id': alquiler.inmueble.id}) }}"> {{alquiler.inmueble.id}} </a></td>
                 <td>{{alquiler.importe | number_format(0,',','.')}} <span class="text-primary" >€</span></td>
                 {# formato 24-08-21 17:16:18  #}
                 <td>{{alquiler.fechainicio | date("j-m-y H:i:s") }}</td>

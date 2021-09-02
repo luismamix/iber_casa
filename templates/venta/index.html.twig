@@ -30,12 +30,12 @@
             <tr>
             <th scope="row">{{venta.id}}</th>
             <td>{{venta.usuario.nombre}} {{venta.usuario.apellido}}</td>
-            <td>{{venta.inmueble.id}}</td>
+            <td><a class="text-purple font-italic" href="{{ path('mostrar_inmueble', {'id': venta.inmueble.id}) }}"> {{venta.inmueble.id}} </a></td>
             {# formato 24-08-21 17:16:18  #}
             <td>{{venta.fechaventa | date("j-m-y H:i:s") }}</td>
             <td>{{venta.reserva | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
             <td>{{venta.iva | number_format(0,',','.')}} </td>
-            <td>{{venta.total | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
+            <td>{{venta.total | number_format(0,',','.')}} <span class="text-purple" >€ </span> {% if venta.inmueble.comercializacion.id == 3 %} - <span class="text-purple font-weight-bold font-italic"> Subasta</span> {% endif %}  </td>
             </tr>
             {% endfor %}
         </tbody>
