@@ -1,6 +1,6 @@
 <li>{{inmueble.tipologia.descripcion}}</li>
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} <li>Cartera:  {{inmueble.cartera.nombre}}</li> {% endif %}
-{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} <li>Propietario: {{inmueble.propietario.nombre}}</li> {% endif %}
+{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} <li>Propietario: {{inmueble.usuario.nombre}} {{inmueble.usuario.apellido}}</li> {% endif %}
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} <li>Status1: {{inmueble.status1.descripcion}}</li> {% endif %}
 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VENDEDOR') %} <li>Status2: {{inmueble.status2.descripcion}}</li> {% endif %}
 <li>Uso: {{inmueble.uso.descripcion}}</li>

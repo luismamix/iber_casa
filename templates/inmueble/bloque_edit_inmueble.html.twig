@@ -28,20 +28,6 @@
              </div>
         </div>
          <div class="form-group row">
-            <label class="col-sm-4 col-form-label" for="propietario">Propietario</label>
-             <div class="col-sm-8"> 
-            <select class="custom-select custom-select-md" name="propietario" required>
-                {% for propietario in propietarios %}
-                    {% if propietario.id == inmueble.propietario.id %}
-                         <option value = {{propietario.id}} selected> {{propietario.nombre}} </option>
-                    {% else %}
-                          <option value= {{propietario.id}} > {{propietario.nombre}} </option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-             </div>
-        </div>
-         <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="status1">Status 1</label>
             <div class="col-sm-8">
             <select class="custom-select custom-select-md" name="status1" required>

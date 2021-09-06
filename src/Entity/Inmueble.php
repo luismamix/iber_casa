@@ -28,11 +28,6 @@ class Inmueble
     private $cartera;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Propietario::class)
-     */
-    private $propietario;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Status1::class)
      */
     private $status1;
@@ -233,18 +228,6 @@ class Inmueble
     public function setCartera(?Cartera $cartera): self
     {
         $this->cartera = $cartera;
-
-        return $this;
-    }
-
-    public function getPropietario(): ?Propietario
-    {
-        return $this->propietario;
-    }
-
-    public function setPropietario(?Propietario $propietario): self
-    {
-        $this->propietario = $propietario;
 
         return $this;
     }

@@ -7,7 +7,6 @@ use App\Entity\Usuario;
 use App\Repository\CarteraRepository;
 use App\Repository\ComercializacionRepository;
 use App\Repository\InmuebleRepository;
-use App\Repository\PropietarioRepository;
 use App\Repository\Status1Repository;
 use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
@@ -31,7 +30,6 @@ class InmuebleManager
         EntityManagerInterface $em,
         TipologiaRepository $tr,
         CarteraRepository $ca,
-        PropietarioRepository $pro,
         Status1Repository $st1,
         Status2Repository $st2,
         UsoRepository $uso,
@@ -41,7 +39,6 @@ class InmuebleManager
         $this->em = $em;
         $this->tr = $tr;
         $this->ca = $ca;
-        $this->pro= $pro;
         $this->st1 = $st1;
         $this->st2= $st2;
         $this->uso= $uso;
@@ -60,10 +57,6 @@ class InmuebleManager
         if (isset($datos['cartera'])) {
             $cartera = $this->ca->find($datos['cartera']);
             $inmueble->setCartera($cartera);
-        }
-        if (isset($datos['propietario'])) {
-            $propietario = $this->pro->find($datos['propietario']);
-            $inmueble->setPropietario($propietario);
         }
         if (isset($datos['status1'])) {
             $status1 = $this->st1->find($datos['status1']);
@@ -220,10 +213,6 @@ class InmuebleManager
         if (isset($datos['cartera'])) {
             $cartera = $this->ca->find($datos['cartera']);
             $inmueble->setCartera($cartera);
-        }
-        if (isset($datos['propietario'])) {
-            $propietario = $this->pro->find($datos['propietario']);
-            $inmueble->setPropietario($propietario);
         }
         if (isset($datos['status1'])) {
             $status1 = $this->st1->find($datos['status1']);

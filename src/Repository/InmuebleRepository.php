@@ -71,11 +71,10 @@ class InmuebleRepository extends ServiceEntityRepository
         }
        
         $q = $em->createQuery(
-            "SELECT inm, ca, com, pro, st1, st2, tpl, u 
+            "SELECT inm, ca, com, st1, st2, tpl, u 
             FROM App\Entity\Inmueble inm
             JOIN inm.cartera ca
             JOIN inm.comercializacion com
-            JOIN inm.propietario pro
             JOIN inm.status1 st1
             JOIN inm.status2 st2
             JOIN inm.tipologia tpl
@@ -137,7 +136,6 @@ class InmuebleRepository extends ServiceEntityRepository
             FROM App\Entity\Inmueble inm
             JOIN inm.cartera ca
             JOIN inm.comercializacion com
-            JOIN inm.propietario pro
             JOIN inm.status1 st1
             JOIN inm.status2 st2
             JOIN inm.tipologia tpl

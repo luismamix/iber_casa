@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\CarteraRepository;
 use App\Repository\ComercializacionRepository;
 use App\Repository\InmuebleRepository;
-use App\Repository\PropietarioRepository;
 use App\Repository\Status1Repository;
 use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
@@ -193,7 +192,6 @@ class InmuebleController extends AbstractController
         Request $request,
         TipologiaRepository $tr,
         CarteraRepository $cr,
-        PropietarioRepository $pr,
         Status1Repository $s1r,
         Status2Repository $s2r,
         ComercializacionRepository $com,
@@ -203,7 +201,6 @@ class InmuebleController extends AbstractController
         $tipologia_id=$request->request->get('tipologia');
         $tipologia = $tr->find($tipologia_id);
         $carteras = $cr->findAll();
-        $propietarios = $pr->findAll();
         $status1 = $s1r->findAll();
         $status2 = $s2r->findAll();
         $comercializaciones = $com->findAll();
@@ -214,7 +211,6 @@ class InmuebleController extends AbstractController
             'controller_name' => 'InmuebleController',
             'tipologia' => $tipologia,
             'carteras' => $carteras,
-            'propietarios' => $propietarios,
             'status1' => $status1,
             'status2' => $status2,
             'comercializaciones' => $comercializaciones,
@@ -239,9 +235,6 @@ class InmuebleController extends AbstractController
         }
         if ($request->request->get('cartera') != null) {
             $datosform['cartera']=$request->request->get('cartera');
-        }
-        if ($request->request->get('propietario') != null) {
-            $datosform['propietario']=$request->request->get('propietario');
         }
         if ($request->request->get('status1') != null) {
             $datosform['status1']=$request->request->get('status1');
@@ -384,7 +377,6 @@ class InmuebleController extends AbstractController
         InmuebleRepository $im,
         TipologiaRepository $tr,
         CarteraRepository $cr,
-        PropietarioRepository $pr,
         Status1Repository $s1r,
         Status2Repository $s2r,
         ComercializacionRepository $com,
@@ -403,7 +395,6 @@ class InmuebleController extends AbstractController
 
         $tipologias = $tr->findAll();
         $carteras = $cr->findAll();
-        $propietarios = $pr->findAll();
         $status1 = $s1r->findAll();
         $status2 = $s2r->findAll();
         $comercializaciones = $com->findAll();
@@ -414,7 +405,6 @@ class InmuebleController extends AbstractController
             'inmueble' => $inmueble,
             'tipologias' => $tipologias,
             'carteras' => $carteras,
-            'propietarios' => $propietarios,
             'status1' => $status1,
             'status2' => $status2,
             'comercializaciones' => $comercializaciones,
@@ -442,9 +432,6 @@ class InmuebleController extends AbstractController
         }
         if ($request->request->get('cartera') != null) {
             $datosform['cartera']=$request->request->get('cartera');
-        }
-        if ($request->request->get('propietario') != null) {
-            $datosform['propietario']=$request->request->get('propietario');
         }
         if ($request->request->get('status1') != null) {
             $datosform['status1']=$request->request->get('status1');
