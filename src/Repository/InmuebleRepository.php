@@ -30,23 +30,23 @@ class InmuebleRepository extends ServiceEntityRepository
         $fields = array();
 
         if ($status1 != null) {
-            echo "status1 : $status1 / ";
+            //echo "status1 : $status1 / ";
             $fields[] = " inm.status1 = $status1 ";
         }
         if ($uso != null) {
-            echo "uso : $uso / ";
+            //echo "uso : $uso / ";
             $fields[] = " inm.uso = $uso ";
         }
         if ($tipologia != null) {   
-            echo "tipologia : $tipologia / ";
+            //echo "tipologia : $tipologia / ";
             $fields[] = " inm.tipologia = $tipologia ";
         }
         if ($fcomercializacion != null) {
-            echo "fcomercializacion : $fcomercializacion / ";
+            //echo "fcomercializacion : $fcomercializacion / ";
             $fields[] = " inm.comercializacion = $fcomercializacion ";
         }
         if ($fcampo_busqueda != null) {
-            echo "fcampo_busqueda : $fcampo_busqueda ";
+            //echo "fcampo_busqueda : $fcampo_busqueda ";
             $fields[] = " inm.localidad LIKE '%"."$fcampo_busqueda"."%' ";
         }
         switch (count($fields)) {
@@ -107,7 +107,7 @@ class InmuebleRepository extends ServiceEntityRepository
             $fields[] = " inm.comercializacion = $fcomercializacion ";
         }
         if ($fcampo_busqueda != null) {
-            $fields[] = " inm.localidad LIKE '%"."$fcampo_busqueda"."%'";
+            $fields[] = " inm.provincia LIKE '%"."$fcampo_busqueda"."%'";
         }
     
         switch (count($fields)) {

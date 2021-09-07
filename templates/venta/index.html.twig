@@ -17,12 +17,13 @@
         <thead>
             <tr>
             <th scope="col"> <span class="text-purple">   Id Venta </span></th>
-            <th scope="col"> <span class="text-purple" >   Usuario </span></th>
+            <th scope="col"> <span class="text-purple" >   Comprador </span></th>
             <th scope="col"> <span class="text-purple" >   Id Inmueble </span></th>
             <th scope="col"> <span class="text-purple" >   Fecha Venta </span></th>
             <th scope="col"> <span class="text-purple" >   Reserva    </span></th>
             <th scope="col"> <span class="text-purple" >   IVA   </span></th>
             <th scope="col"> <span class="text-purple" >   Total  </span></th>
+            {% if is_granted('ROLE_ADMIN') %}   <th scope="col"> <span class="text-purple" > Propietario </span></th> {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
             <td>{{venta.reserva | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
             <td>{{venta.iva | number_format(0,',','.')}} </td>
             <td>{{venta.total | number_format(0,',','.')}} <span class="text-purple" >€ </span> {% if venta.inmueble.comercializacion.id == 3 %} - <span class="text-purple font-weight-bold font-italic"> Subasta</span> {% endif %}  </td>
+            {% if is_granted('ROLE_ADMIN') %} <td>{{venta.inmueble.usuario.nombre}} {{venta.inmueble.usuario.apellido}}</td> {% endif %}
             </tr>
             {% endfor %}
         </tbody>

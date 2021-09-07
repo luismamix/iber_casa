@@ -17,12 +17,13 @@
         <thead>
             <tr>
             <th scope="col"> <span class="text-primary" >   Id Alquiler </span></th>
-            <th scope="col"> <span class="text-primary" >   Usuario </span></th>
+            <th scope="col"> <span class="text-primary" >   Inquilino </span></th>
             <th scope="col"> <span class="text-primary" >   Id Inmueble </span></th>
             <th scope="col"> <span class="text-primary" >   Importe </span></th>
             <th scope="col"> <span class="text-primary" >   Fecha Inicio    </span></th>
             <th scope="col"> <span class="text-primary" >   Fecha Fin   </span></th>
             <th scope="col"> <span class="text-primary" >   Fianza  </span></th>
+            {% if is_granted('ROLE_ADMIN') %}   <th scope="col"> <span class="text-primary" > Propietario </span></th> {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
                 <td>{{alquiler.fechainicio | date("j-m-y H:i:s") }}</td>
                 <td>{{alquiler.fechafin | date("j-m-y H:i:s") }}</td>
                 <td>{{alquiler.fianza | number_format(0,',','.')}} <span class="text-primary" >€</span></td>
+                 {% if is_granted('ROLE_ADMIN') %} <td>{{alquiler.inmueble.usuario.nombre}} {{alquiler.inmueble.usuario.apellido}}</td> {% endif %}
                 </tr>
                 {% endfor %}
         </tbody>
