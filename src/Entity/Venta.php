@@ -47,6 +47,11 @@ class Venta
      */
     private $reserva;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Usuario::class)
+     */
+    private $Propietario;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Venta
     public function setReserva(string $reserva): self
     {
         $this->reserva = $reserva;
+
+        return $this;
+    }
+
+    public function getPropietario(): ?Usuario
+    {
+        return $this->Propietario;
+    }
+
+    public function setPropietario(?Usuario $Propietario): self
+    {
+        $this->Propietario = $Propietario;
 
         return $this;
     }

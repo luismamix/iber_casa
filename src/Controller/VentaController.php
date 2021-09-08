@@ -81,8 +81,10 @@ class VentaController extends AbstractController
         if (isset($request)) {
             $venta = new Venta();
             $user = $ur->find($request->request->get('idusr'));
+            $propietario = $ur->find($request->request->get('idpropietario'));
             $inmueble = $ir->find($request->request->get('idinmueble'));
             $venta->setUsuario($user);
+            $venta->setPropietario($propietario);
             $venta->setInmueble($inmueble);
             $venta->setFechaventa(new \DateTime($request->request->get('fecha_venta')));
             $venta->setReserva($request->request->get('reserva'));
@@ -98,7 +100,7 @@ class VentaController extends AbstractController
                  //$ex->getTraceAsString();
                  $this->addFlash('error al comprar el inmueble', $ex->getMessage());
                  return $this->redirectToRoute('inmueble_index_comercializacion_disponibles', [
-                     'controller_name' => 'AlquilerController',
+                     'controller_name' => 'VentaController',
                  ]);
              } 
 
@@ -115,7 +117,7 @@ class VentaController extends AbstractController
                  //$ex->getTraceAsString();
                  $this->addFlash('error al cambiar el estado del inmueble a vendido', $ex->getMessage());
                  return $this->redirectToRoute('inmueble_index_comercializacion_disponibles', [
-                     'controller_name' => 'AlquilerController',
+                     'controller_name' => 'VentaController',
                  ]);
              }
 

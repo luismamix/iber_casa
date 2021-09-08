@@ -9,6 +9,7 @@ use App\Repository\Status1Repository;
 use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
 use App\Repository\UsoRepository;
+use App\Repository\UsuarioRepository;
 use App\Services\InmuebleManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -380,7 +381,8 @@ class InmuebleController extends AbstractController
         Status1Repository $s1r,
         Status2Repository $s2r,
         ComercializacionRepository $com,
-        UsoRepository $ur
+        UsoRepository $ur,
+        UsuarioRepository $userrepo
     ): Response {
         
         $inmueble  = $im->find($id);
@@ -399,6 +401,14 @@ class InmuebleController extends AbstractController
         $status2 = $s2r->findAll();
         $comercializaciones = $com->findAll();
         $usos = $ur->findAll();
+        $usuarios = $userrepo->findAll();
+        $propietarios= array();
+        foreach($usuarios as $usuario){
+            //solo guardamos vendedores
+            if($usuario->getTipousuario()->getId() == 2){
+                $propietarios[] = $usuario;
+            }
+        }
 
         return $this->render('inmueble/form_modificar_inmueble.html.twig', [
             'controller_name' => 'InmuebleController',
@@ -408,7 +418,8 @@ class InmuebleController extends AbstractController
             'status1' => $status1,
             'status2' => $status2,
             'comercializaciones' => $comercializaciones,
-            'usos' => $usos
+            'usos' => $usos,
+            'propietarios' => $propietarios,
         ]);
     }
 
@@ -540,7 +551,9 @@ class InmuebleController extends AbstractController
         if ($request->request->get('terrazas') != null) {
             $datosform['terrazas']=$request->request->get('terrazas');
         }
-
+        if($request->request->get('nuevopropietario') != 0){
+            $datosform['nuevopropietario'] = $request->request->get('nuevopropietario');
+        }
         //dump($datosform);
         
         //llamar al servicio q se encarga de crear, modificar,borrar inmuebles.

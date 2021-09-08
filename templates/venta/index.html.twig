@@ -37,7 +37,7 @@
             <td>{{venta.reserva | number_format(0,',','.')}} <span class="text-purple" >€</span></td>
             <td>{{venta.iva | number_format(0,',','.')}} </td>
             <td>{{venta.total | number_format(0,',','.')}} <span class="text-purple" >€ </span> {% if venta.inmueble.comercializacion.id == 3 %} - <span class="text-purple font-weight-bold font-italic"> Subasta</span> {% endif %}  </td>
-            {% if is_granted('ROLE_ADMIN') %} <td>{{venta.inmueble.usuario.nombre}} {{venta.inmueble.usuario.apellido}}</td> {% endif %}
+            {% if is_granted('ROLE_ADMIN') %} <td>{{venta.propietario.nombre}} {{venta.propietario.apellido}}</td> {% endif %}
             </tr>
             {% endfor %}
         </tbody>

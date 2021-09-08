@@ -11,6 +11,7 @@ use App\Repository\Status1Repository;
 use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
 use App\Repository\UsoRepository;
+use App\Repository\UsuarioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class InmuebleManager
@@ -19,7 +20,7 @@ class InmuebleManager
     private $em;
     private $tr;
     private $ca;
-    private $pro;
+    private $users;
     private $st1;
     private $st2;
     private $uso;
@@ -33,7 +34,8 @@ class InmuebleManager
         Status1Repository $st1,
         Status2Repository $st2,
         UsoRepository $uso,
-        ComercializacionRepository $com
+        ComercializacionRepository $com,
+        UsuarioRepository $users
     ) {
         $this->im = $im;
         $this->em = $em;
@@ -43,6 +45,7 @@ class InmuebleManager
         $this->st2= $st2;
         $this->uso= $uso;
         $this->com = $com;
+        $this->users = $users;
     }
 
     public function crearInmueble(array $datos, string $rutaProyecto, Usuario $user)
@@ -399,7 +402,10 @@ class InmuebleManager
         }else{
             $inmueble->setTerrazas(null);
         }
-
+        if(isset($datos['nuevopropietario'])){
+            $nuevopropietario = $this->users->find($datos['nuevopropietario']);
+            $inmueble->setUsuario($nuevopropietario);
+        }
 
         //persistir y flushear
         $this->em->persist($inmueble);

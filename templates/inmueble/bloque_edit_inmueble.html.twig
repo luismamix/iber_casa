@@ -153,6 +153,19 @@
             </select>
              </div>
         </div>
+        {% if is_granted('ROLE_ADMIN') %}
+        <div class="form-group row">
+            <label class="col-sm-4 col-form-label text-primary" for="nuevopropietario">Cambiar propietario</label>
+            <div class="col-sm-8">
+            <select class="custom-select custom-select-md" name="nuevopropietario" id="nuevopropietario">
+                    <option value = 0 selected> -- Selec. nuevo propietario --</option>
+                {% for  propietario in propietarios %}
+                    <option value= {{propietario.id}} > {{propietario.email}} </option>
+                {% endfor %}
+            </select>
+             </div>
+        </div>
+        {% endif %}
         <div class="form-group row">
             <label class="col-sm-4 col-form-label" for="descripcion">Descripcion</label>
             <div class="col-sm-8">
