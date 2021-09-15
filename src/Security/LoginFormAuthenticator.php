@@ -29,10 +29,14 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $this->urlGenerator = $urlGenerator;
     }
 
+    public function supports(Request $request): bool
+    {
+        return $request->isMethod('POST') && $this->getLoginUrl($request) === $_SERVER['BASE'].$request->getPathInfo();
+    }
+
     public function authenticate(Request $request): PassportInterface
     {
         $email = $request->request->get('email', '');
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
@@ -57,6 +61,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
+
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
