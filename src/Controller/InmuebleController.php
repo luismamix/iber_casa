@@ -10,12 +10,15 @@ use App\Repository\Status2Repository;
 use App\Repository\TipologiaRepository;
 use App\Repository\UsoRepository;
 use App\Repository\UsuarioRepository;
+use App\Repository\VentaRepository;
 use App\Services\InmuebleManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * @Route("/inmueble")
@@ -610,6 +613,35 @@ class InmuebleController extends AbstractController
 
         return $this->redirectToRoute('inmueble_index_comercializacion_todos', [
             'controller_name' => 'InmuebleController',
+        ]);
+    }
+
+    /**
+     * @Route("/informe_comercial}", name="informe_comercial")
+     */
+    public function informe_comercial(InmuebleRepository $ir, VentaRepository $vr, Security $security): Response
+    {   
+        $inmuebles = null;
+        $ventas = null;
+        
+        //todos los inmuebles
+        if($security->isGranted('ROLE_ADMIN')){
+            //$inmuebles = $ir->findAll();
+            $inmuebles = $ir->findAllOrderBy();
+            $ventas = $vr->findAll();
+        }
+
+        //solo los inmuebles del vendedor
+        if($security->isGranted('ROLE_VENDEDOR')){
+            $user= $this->getUser();
+            $inmuebles = $ir->findBy(['usuario' => $user],['tipologia' => 'ASC', 'id' => 'ASC']);
+            $ventas = $vr->findBy(['Propietario' => $user]);
+        }
+
+        return $this->render('inmueble/informe_comercial.html.twig', [
+            'controller_name' => 'InmuebleController',
+            'inmuebles' => $inmuebles,
+            'ventas' => $ventas
         ]);
     }
 }

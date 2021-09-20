@@ -152,6 +152,30 @@ class InmuebleRepository extends ServiceEntityRepository
     // /**
     //  * @return Inmueble[] Returns an array of Inmueble objects
     //  */
+    
+    public function findAllOrderBy()
+    {   
+        $em = $this->getEntityManager();
+        $q = $em->createQuery(
+            "SELECT inm, ca, com, st1, st2, tpl, u 
+            FROM App\Entity\Inmueble inm
+            JOIN inm.cartera ca
+            JOIN inm.comercializacion com
+            JOIN inm.status1 st1
+            JOIN inm.status2 st2
+            JOIN inm.tipologia tpl
+            JOIN inm.uso u
+            ORDER BY inm.tipologia, inm.id"
+        );
+    
+        // returns an array of Product objects
+        return $q->getResult();
+    }
+    
+
+    // /**
+    //  * @return Inmueble[] Returns an array of Inmueble objects
+    //  */
     /*
     public function findByExampleField($value)
     {

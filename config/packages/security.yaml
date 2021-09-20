@@ -53,6 +53,7 @@ security:
          - { path: ^/inmueble/new/form_elegir_tipologia, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/inmueble/new/form_nuevo_inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/inmueble/new/nuevo_inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
+         - { path: ^/inmueble//informe_comercial, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/inmueble, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/alquiler/index, roles: [ROLE_VENDEDOR, ROLE_ADMIN] }
          - { path: ^/alquiler/form_alquiler, roles: [ROLE_COMPRADOR] }

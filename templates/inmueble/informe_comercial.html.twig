@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Inmuebles detallado{% endblock %}
+
+{% block body %}
+<div class="row mt-2">
+    <div class="col ">
+        <h1>Listado de Inmuebles detallado
+    <span><i style="font-size:38px;" class="fas fa-clipboard text-dark ml-1"></i></span></h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 ">
+        
+        <table class="table table-striped">
+        <thead>
+            <tr>
+            <th scope="col"> <span class="text-primary" >   Id Inmueble </span></th>
+            <th scope="col"> <span class="text-primary" >   Tipologia   </span></th>
+            <th scope="col"> <span class="text-primary" >   Cartera  </span></th>
+            <th scope="col"> <span class="text-primary" >   Propietario  </span></th>
+            <th scope="col"> <span class="text-primary" >   Status1    </span></th>
+            <th scope="col"> <span class="text-primary" >   Uso    </span></th>
+            <th scope="col"> <span class="text-primary" >   Status2    </span></th>
+            <th scope="col"> <span class="text-primary" >   Precio    </span></th>
+            <th scope="col"> <span class="text-primary" >   Localidad    </span></th>
+            <th scope="col"> <span class="text-primary" >   Provincia    </span></th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for inmueble in inmuebles %}
+                <tr>
+                <th scope="row"><a class="text-primary font-italic" href="{{ path('mostrar_inmueble', {'id': inmueble.id}) }}"> {{inmueble.id}} </a></th>
+                <td>{{inmueble.tipologia.descripcion}}</td>
+                <td>{{inmueble.cartera.nombre}} </td>
+                <td>{{inmueble.usuario.nombre}} {{inmueble.usuario.apellido}} </td>
+                {% if inmueble.status1.id == 4 %}
+                <td class="text-purple font-italic"><ins>{{inmueble.status1.descripcion}} </ins></td>
+                {% elseif inmueble.status1.id == 3 %}
+                <td class="text-marine font-italic"><ins>{{inmueble.status1.descripcion}} </ins> </td>
+                {% else %}
+                <td>{{inmueble.status1.descripcion}} </td>
+                {% endif %}
+                <td>{{inmueble.uso.descripcion}} </td>
+                <td>{{inmueble.status2.descripcion}} </td>
+                {% if inmueble.status1.id == 4 %}
+                    {% set i = 0 %}
+                    {% for venta in ventas | reverse %}
+                        {% if inmueble.id == venta.inmueble.id and i == 0 %}
+                             <td class="text-purple font-italic">{{venta.total | number_format(0,',','.')}} <span> €</span></td>
+                             {% set i =  1 %}
+                        {% endif %}  
+                    {% endfor %}
+                {% elseif inmueble.status1.id == 3 %}
+                <td class="text-marine font-italic">{{inmueble.precio | number_format(0,',','.')}} <span> €</span></td>
+                {% else %}
+                <td>{{inmueble.precio | number_format(0,',','.')}} <span class="text-primary" > €</span></td>
+                {% endif %}
+                <td>{{inmueble.localidad}} </td>
+                <td>{{inmueble.provincia}} </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+        </table>
+
+    </div>
+    <div class="col-md-1"></div>
+</div>
+{% endblock %}
